@@ -25,7 +25,7 @@ public class Web_User {
     @Column(name = "password")
     private String password;
     @Column(name = "role")
-    private Enum role;
+    private Role role;
     
     @OneToOne(mappedBy = "webUser")
     private Customer customer;

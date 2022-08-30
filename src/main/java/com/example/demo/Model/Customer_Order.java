@@ -26,7 +26,6 @@ public class Customer_Order {
     private Date orderedDate;
     @Column(name = "shipped_date")
     private Date shippedDate;
-    
     @OneToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "idCart")
     private Cart cart;

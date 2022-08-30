@@ -9,6 +9,8 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Blob;
+import java.util.Collection;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -32,8 +34,13 @@ public class Product {
     private BigDecimal price;
     @Column(name = "picture")
     private Blob picture;
-    @Column(name = "fk_cart_id")
-    private long fk_CartId;
-    @Column(name = "fk_category_id")
-    private long fk_CategoryId;
+    @ManyToMany
+    @JoinTable(
+            name = "cart_product",
+            joinColumns = @JoinColumn(name = "idP"),
+            inverseJoinColumns = @JoinColumn(name = "idCart"))
+    private Collection<Cart> carts;
+    @ManyToOne
+    @JoinColumn(name = "idCat")
+    private Category category;
 }

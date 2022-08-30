@@ -3,6 +3,7 @@ package com.example.demo.Model;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -17,7 +18,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "Customer_Order")
 @Entity
-@RequiredArgsConstructor
 public class Customer_Order {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

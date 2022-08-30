@@ -7,7 +7,10 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
@@ -22,6 +25,7 @@ public class Cart {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="IdCart")
     @Setter(value = AccessLevel.NONE)
+    @NotNull
     private long idCart;
     @Column(name = "total")
     private BigDecimal total;
@@ -33,5 +37,9 @@ public class Cart {
     @OneToOne(mappedBy = "cart")
     private Customer_Order order;
     @ManyToMany(mappedBy = "carts")
-    Collection<Product> products;
+    private Collection<Product> products = new ArrayList<Product>();
+    
+    public void addProducts(Product product) {
+    	products.add(product);
+    }
 }

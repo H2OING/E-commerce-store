@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import java.util.Date;
 
 @Getter
@@ -14,11 +16,13 @@ import java.util.Date;
 @ToString
 @Table(name = "Customer_Order")
 @Entity
+@RequiredArgsConstructor
 public class Customer_Order {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="IdCO")
     @Setter(value = AccessLevel.NONE)
+    @NotNull
     private long idCO;
     @Column(name = "status")
     private Order_Status status;

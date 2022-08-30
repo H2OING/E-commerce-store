@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Set;
 
 @Getter
@@ -32,5 +33,5 @@ public class Cart {
     @OneToOne(mappedBy = "cart")
     private Customer_Order order;
     @ManyToMany(mappedBy = "carts")
-    Set<Product> products;
+    Collection<Product> products;
 }

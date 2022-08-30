@@ -28,7 +28,6 @@ public class Customer {
     private String phoneNumber;
     @Column(name = "address")
     private String address;
-    
     @OneToOne
     @JoinColumn(name = "web_user_id", referencedColumnName = "idUser")
     private Web_User webUser;

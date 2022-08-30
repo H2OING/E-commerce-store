@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 
 @Getter
@@ -26,5 +27,5 @@ public class Category {
     @Column(name = "description")
     private String description;
     @OneToMany(mappedBy = "category")
-    private Set<Product> products;
+    private Collection<Product> products;
 }

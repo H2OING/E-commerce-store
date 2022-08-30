@@ -9,6 +9,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Blob;
+import java.util.Collection;
 import java.util.Set;
 
 @Getter
@@ -38,8 +39,8 @@ public class Product {
             name = "cart_product",
             joinColumns = @JoinColumn(name = "idP"),
             inverseJoinColumns = @JoinColumn(name = "idCart"))
-    Set<Cart> carts;
+    private Collection<Cart> carts;
     @ManyToOne
     @JoinColumn(name = "idCat")
-    Category category;
+    private Category category;
 }

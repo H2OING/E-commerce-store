@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -19,6 +20,7 @@ public class Web_User {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="IdUser")
     @Setter(value = AccessLevel.NONE)
+    @NotNull
     private long idUser;
     @Column(name = "email")
     private String email;
@@ -26,7 +28,6 @@ public class Web_User {
     private String password;
     @Column(name = "role")
     private Role role;
-    
     @OneToOne(mappedBy = "webUser")
     private Customer customer;
 }

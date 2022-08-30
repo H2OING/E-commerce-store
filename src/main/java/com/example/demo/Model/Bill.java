@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import java.util.Date;
 
 @Getter
@@ -19,6 +21,7 @@ public class Bill {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="IdBi")
+    @NotNull
     @Setter(value = AccessLevel.NONE)
     private long idBi;
     @Column(name = "payment_method")

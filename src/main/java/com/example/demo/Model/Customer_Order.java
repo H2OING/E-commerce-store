@@ -21,7 +21,7 @@ public class Customer_Order {
     @Setter(value = AccessLevel.NONE)
     private long idCO;
     @Column(name = "status")
-    private Enum status;
+    private Order_Status status;
     @Column(name = "ordered_date")
     private Date orderedDate;
     @Column(name = "shipped_date")

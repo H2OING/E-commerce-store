@@ -22,7 +22,7 @@ public class Bill {
     @Setter(value = AccessLevel.NONE)
     private long idBi;
     @Column(name = "payment_method")
-    private Enum paymentMethod;
+    private Payment_Method paymentMethod;
     @Column(name = "payment_date")
     private Date paymentDate;
     @Column(name = "invoice_number")

@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -25,10 +26,11 @@ public class Cart {
     private BigDecimal total;
     @Column(name = "is_empty")
     private boolean isEmpty;
-    
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "idCu")
     private Customer customer;
     @OneToOne(mappedBy = "cart")
     private Customer_Order order;
+    @ManyToMany(mappedBy = "carts")
+    Set<Product> products;
 }

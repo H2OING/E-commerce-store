@@ -30,7 +30,7 @@ public class Customer {
     private String address;
     
     @OneToOne
-    @JoinColumn(name = "web_user_id", referencedColumnName = "id")
+    @JoinColumn(name = "web_user_id", referencedColumnName = "idUser")
     private Web_User webUser;
     @OneToOne(mappedBy = "customer")
     private Cart cart;

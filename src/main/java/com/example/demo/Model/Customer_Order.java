@@ -28,7 +28,7 @@ public class Customer_Order {
     private Date shippedDate;
     
     @OneToOne
-    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    @JoinColumn(name = "cart_id", referencedColumnName = "idCart")
     private Cart cart;
     @OneToOne(mappedBy = "order")
     private Bill bill;

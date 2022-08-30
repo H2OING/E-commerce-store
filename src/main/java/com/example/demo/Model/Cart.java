@@ -27,7 +27,7 @@ public class Cart {
     private boolean isEmpty;
     
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JoinColumn(name = "customer_id", referencedColumnName = "idCu")
     private Customer customer;
     @OneToOne(mappedBy = "cart")
     private Customer_Order order;

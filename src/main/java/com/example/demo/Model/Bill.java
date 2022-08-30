@@ -29,6 +29,6 @@ public class Bill {
     private long invoiceNumber;
    
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @JoinColumn(name = "order_id", referencedColumnName = "idCO")
     private Customer_Order order;
 }

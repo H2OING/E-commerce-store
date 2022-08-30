@@ -1,5 +1,6 @@
 package com.example.demo.Model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -16,13 +17,15 @@ import java.math.BigDecimal;
 @Entity
 public class Cart {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="IdCart")
+    @Setter(value = AccessLevel.NONE)
+    private long idCart;
     @Column(name = "total")
     private BigDecimal total;
     @Column(name = "is_empty")
     private boolean isEmpty;
+    
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;

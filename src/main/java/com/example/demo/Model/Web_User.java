@@ -1,5 +1,6 @@
 package com.example.demo.Model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -15,15 +16,17 @@ import javax.persistence.*;
 @Entity
 public class Web_User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="IdUser")
+    @Setter(value = AccessLevel.NONE)
+    private long idUser;
     @Column(name = "email")
     private String email;
     @Column(name = "password")
     private String password;
     @Column(name = "role")
     private Enum role;
+    
     @OneToOne(mappedBy = "webUser")
     private Customer customer;
 }

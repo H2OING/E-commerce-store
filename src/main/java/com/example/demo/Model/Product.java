@@ -1,5 +1,6 @@
 package com.example.demo.Model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -17,9 +18,10 @@ import java.sql.Blob;
 @Entity
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="IdP")
+    @Setter(value = AccessLevel.NONE)
+    private long idP;
     @Column(name = "name")
     private String name;
     @Column(name = "description")

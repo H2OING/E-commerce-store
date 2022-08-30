@@ -1,5 +1,6 @@
 package com.example.demo.Model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -15,9 +16,10 @@ import javax.persistence.*;
 @Entity
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="IdCu")
+    @Setter(value = AccessLevel.NONE)
+    private long idCu;
     @Column(name = "name")
     private String name;
     @Column(name = "surname")
@@ -26,6 +28,7 @@ public class Customer {
     private String phoneNumber;
     @Column(name = "address")
     private String address;
+    
     @OneToOne
     @JoinColumn(name = "web_user_id", referencedColumnName = "id")
     private Web_User webUser;

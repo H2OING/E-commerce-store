@@ -8,8 +8,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -32,6 +32,7 @@ public class Cart {
     private Customer customer;
     @OneToOne(mappedBy = "cart")
     private Customer_Order order;
+    
     @ManyToMany(mappedBy = "carts")
-    Collection<Product> products;
+    private Collection<Product> products = new ArrayList<Product>();
 }

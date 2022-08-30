@@ -7,6 +7,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Getter
@@ -20,13 +23,14 @@ public class Category {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="IdCat")
     @Setter(value = AccessLevel.NONE)
+    @NotNull
     private long idCat;
     @Column(name = "name")
+    @NotNull
     private String name;
     @Column(name = "description")
     private String description;
     
     @OneToMany(mappedBy = "category")
-    @ToString.Exclude
-    private Collection<Product> products;
+    private Collection<Product> products = new ArrayList<Product>();
 }

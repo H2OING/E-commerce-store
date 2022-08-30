@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,6 +24,7 @@ public class Cart {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="IdCart")
     @Setter(value = AccessLevel.NONE)
+    @NotNull
     private long idCart;
     @Column(name = "total")
     private BigDecimal total;
@@ -35,4 +38,8 @@ public class Cart {
     
     @ManyToMany(mappedBy = "carts")
     private Collection<Product> products = new ArrayList<Product>();
+    
+    public void addProducts(Product product) {
+    	products.add(product);
+    }
 }

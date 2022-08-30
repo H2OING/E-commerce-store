@@ -24,9 +24,11 @@ public class Bill {
     @NotNull
     @Setter(value = AccessLevel.NONE)
     private long idBi;
+    @NotNull
     @Column(name = "payment_method")
     private Payment_Method paymentMethod;
     @Column(name = "payment_date")
+    @NotNull
     private Date paymentDate;
     @Column(name = "invoice_number")
     private long invoiceNumber;

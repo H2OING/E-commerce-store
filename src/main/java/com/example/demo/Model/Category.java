@@ -27,6 +27,7 @@ public class Category {
     @NotNull
     private long idCat;
     @Column(name = "name")
+    @NotNull
     private String name;
     @Column(name = "description")
     private String description;

@@ -23,10 +23,13 @@ public class Web_User {
     @NotNull
     private long idUser;
     @Column(name = "email")
+    @NotNull
     private String email;
     @Column(name = "password")
+    @NotNull
     private String password;
     @Column(name = "role")
+    @NotNull
     private Role role;
     @OneToOne(mappedBy = "webUser")
     private Customer customer;

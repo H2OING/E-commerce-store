@@ -8,6 +8,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -23,12 +25,20 @@ public class Customer {
     @NotNull
     private long idCu;
     @Column(name = "name")
+    @NotNull
+	@Pattern(regexp = "[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+", message = "Invalid input for name")
+	@Size(min = 2, max = 30 ,message = "Invalid input length for name")
     private String name;
     @Column(name = "surname")
+    @NotNull
+	@Pattern(regexp = "[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+", message = "Invalid input for surname")
+	@Size(min = 2, max = 30 ,message = "Invalid input length for surname")
     private String surname;
     @Column(name = "phone_number")
+    @NotNull
     private String phoneNumber;
     @Column(name = "address")
+    @NotNull
     private String address;
     @OneToOne
     @JoinColumn(name = "web_user_id", referencedColumnName = "idUser")

@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -36,10 +35,13 @@ public class Cart {
     private Customer customer;
     @OneToOne(mappedBy = "cart")
     private Customer_Order order;
+    
     @ManyToMany(mappedBy = "carts")
     private Collection<Product> products = new ArrayList<Product>();
+
     
     public void addProducts(Product product) {
     	products.add(product);
     }
+
 }

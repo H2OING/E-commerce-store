@@ -48,6 +48,7 @@ public class Product {
     private BigDecimal price;
     @Column(name = "picture")
     private Blob picture;
+    
     @ManyToMany
     @ToString.Exclude
     @JoinTable(
@@ -55,6 +56,7 @@ public class Product {
             joinColumns = @JoinColumn(name = "idP"),
             inverseJoinColumns = @JoinColumn(name = "idCart"))
     private Collection<Cart> carts = new ArrayList<Cart>();
+
     @ManyToOne
     @JoinColumn(name = "idCat")
     private Category category;

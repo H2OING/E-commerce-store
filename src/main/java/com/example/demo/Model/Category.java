@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -31,6 +30,12 @@ public class Category {
     private String name;
     @Column(name = "description")
     private String description;
+    
     @OneToMany(mappedBy = "category")
+    @ToString.Exclude
     private Collection<Product> products = new ArrayList<Product>();
+
+    
+ 
+
 }

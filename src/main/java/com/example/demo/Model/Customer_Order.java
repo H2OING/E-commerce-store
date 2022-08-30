@@ -2,6 +2,7 @@ package com.example.demo.Model;
 
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,6 +15,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
+
 @Table(name = "Customer_Order")
 @Entity
 @RequiredArgsConstructor

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BillService {
+public class Bill_Service {
     @Autowired
     Bill_Repository billRepository;
 

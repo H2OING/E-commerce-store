@@ -23,7 +23,6 @@ public class Category {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="IdCat")
     @Setter(value = AccessLevel.NONE)
-    @NotNull
     private long idCat;
     @Column(name = "name")
     @NotNull
@@ -35,7 +34,10 @@ public class Category {
     @ToString.Exclude
     private Collection<Product> products = new ArrayList<Product>();
 
-    
+    public Category (String name,String description) {
+    	this.name = name;
+    	this.description = description;
+    }
  
 
 }

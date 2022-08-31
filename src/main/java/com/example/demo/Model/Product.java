@@ -13,6 +13,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.util.ArrayList;
@@ -30,7 +33,6 @@ public class Product {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="IdP")
     @Setter(value = AccessLevel.NONE)
-    @NotNull
     private long idP;
 	@Size(min = 2, max = 30, message = "Invalid input length for Product name")
     @Column(name = "name")
@@ -53,11 +55,25 @@ public class Product {
     @ToString.Exclude
     @JoinTable(
             name = "cart_product",
-            joinColumns = @JoinColumn(name = "idP"),
-            inverseJoinColumns = @JoinColumn(name = "idCart"))
+            joinColumns = @JoinColumn(name = "IdP"),
+            inverseJoinColumns = @JoinColumn(name = "IdCart"))
     private Collection<Cart> carts = new ArrayList<Cart>();
+    
+    //public void addCarts (Cart cart) {
+    //	carts.add(cart);
+    //}
 
     @ManyToOne
     @JoinColumn(name = "idCat")
+    @Cascade(CascadeType.ALL)
     private Category category;
+    
+    public Product (String name,String description,int quantity,BigDecimal price,Blob picture,Category category) {
+    	this.name = name;
+    	this.description = description;
+    	this.quantity = quantity;
+    	this.price = price;
+    	this.picture = picture;
+    	this.category = category;
+    }
 }

@@ -10,6 +10,11 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import java.util.Date;
 
 @Getter
@@ -24,19 +29,28 @@ public class Customer_Order {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="IdCO")
     @Setter(value = AccessLevel.NONE)
-    @NotNull
     private long idCO;
     @Column(name = "status")
     private Order_Status status;
     @Column(name = "ordered_date")
+    @DateTimeFormat(iso = ISO.DATE_TIME)
     private Date orderedDate;
     @Column(name = "shipped_date")
+    @DateTimeFormat(iso = ISO.DATE_TIME)
     private Date shippedDate;
     @OneToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "idCart")
+    @Cascade(CascadeType.ALL)
     private Cart cart;
     @OneToOne(mappedBy = "order")
     private Bill bill;
+    
+    public Customer_Order(Order_Status status,Date orderedDate,Date shippedDate, Cart cart) {
+    	this.status = status;
+    	this.orderedDate = orderedDate;
+    	this.shippedDate = shippedDate;
+    	this.cart = cart;
+    }
 }
 
 

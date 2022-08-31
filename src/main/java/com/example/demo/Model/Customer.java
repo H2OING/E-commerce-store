@@ -11,6 +11,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Getter
 @Setter
 @ToString
@@ -22,7 +25,6 @@ public class Customer {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="IdCu")
     @Setter(value = AccessLevel.NONE)
-    @NotNull
     private long idCu;
     @Column(name = "name")
     @NotNull
@@ -42,7 +44,16 @@ public class Customer {
     private String address;
     @OneToOne
     @JoinColumn(name = "web_user_id", referencedColumnName = "idUser")
+    @Cascade(CascadeType.ALL)
     private Web_User webUser;
     @OneToOne(mappedBy = "customer")
     private Cart cart;
+    
+    public Customer (String name,String surname,String phoneNumber,String address,Web_User webUser ) {
+    	this.name = name;
+    	this.surname = surname;
+    	this.phoneNumber = phoneNumber;
+    	this.address = address;
+    	this.webUser = webUser;
+    }
 }

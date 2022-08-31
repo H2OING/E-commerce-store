@@ -29,13 +29,8 @@ public class Web_User {
     @NotNull
     private String password;
     @Column(name = "role")
-<<<<<<< HEAD
-    private Role role;
-    
-=======
     @NotNull
     private Role role;
->>>>>>> f04195e503a762088da8d6a8b42b2665c0c23d98
     @OneToOne(mappedBy = "webUser")
     private Customer customer;
 }

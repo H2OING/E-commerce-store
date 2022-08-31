@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class Customer_Order_Controller {
-
+/*
     @Autowired
     Customer_Order_Service customerOrderService;
 
@@ -43,5 +43,5 @@ public class Customer_Order_Controller {
         return "deleteCustomerOrder";
     }
 
-
+ */
 }

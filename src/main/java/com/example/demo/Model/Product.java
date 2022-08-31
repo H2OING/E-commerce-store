@@ -1,10 +1,6 @@
 package com.example.demo.Model;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -13,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -49,7 +46,7 @@ public class Product {
     @Max(value = 5000)
     private BigDecimal price;
     @Column(name = "picture")
-    private Blob picture;
+    private byte[] picture;
     
     @ManyToMany
     @ToString.Exclude
@@ -68,7 +65,7 @@ public class Product {
     @Cascade(CascadeType.ALL)
     private Category category;
     
-    public Product (String name,String description,int quantity,BigDecimal price,Blob picture,Category category) {
+    public Product (String name,String description,int quantity,BigDecimal price,byte[] picture,Category category) {
     	this.name = name;
     	this.description = description;
     	this.quantity = quantity;

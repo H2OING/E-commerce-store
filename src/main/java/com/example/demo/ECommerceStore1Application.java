@@ -49,7 +49,7 @@ public class ECommerceStore1Application {
 				Product prod = new Product("Samsung S22", "New, 5G", 1, new BigDecimal(450), null,category);
 				//ProdRepo.save(prod);
 				Cart cart = new Cart(new BigDecimal(450), false, customer, new ArrayList<>(Arrays.asList(prod)));
-				CRepo.save(cart);
+				//CRepo.save(cart);
 				Customer_Order cOrder = new Customer_Order(Order_Status.NEW, new Date(), new Date(), cart);
 				//CORepo.save(cOrder);
 				Bill bill = new Bill(Payment_Method.BANK_TRANSFER, new Date(), 45567, cOrder);

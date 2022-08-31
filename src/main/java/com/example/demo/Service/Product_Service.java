@@ -1,8 +1,10 @@
 package com.example.demo.Service;
 
+import com.example.demo.Model.Category;
 import com.example.demo.Model.Product;
 import com.example.demo.Repository.Product_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -16,6 +18,10 @@ public class Product_Service {
 
     public List<Product> getAllProducts(){
         return productRepository.findAll();
+    }
+
+    public List<Product> getProductsByCategoryId(Category category){
+        return productRepository.findAllByCategory(category);
     }
 
     public Product getProductById(long id){

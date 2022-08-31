@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Model.Category;
 import com.example.demo.Service.Category_Service;
+import com.example.demo.Service.Product_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,8 @@ public class Category_Controller {
 
     @Autowired
     Category_Service categoryService;
+    @Autowired
+    Product_Service productService;
 
     @GetMapping("/categories")
     public String getAllCategories(Model model){
@@ -21,7 +24,10 @@ public class Category_Controller {
 
     @GetMapping(value = "/category/{id}")
     public String getCategory(@PathVariable(name = "id") Long id, Model model){
-        model.addAttribute("category", categoryService.getCategoryById(id));
+        Category category = categoryService.getCategoryById(id);
+        model.addAttribute("category", category);
+        model.addAttribute("products", productService.getProductsByCategoryId(category));
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "category";
     }
 

@@ -11,6 +11,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Getter
 @Setter
 @ToString
@@ -22,7 +25,6 @@ public class Web_User {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="IdUser")
     @Setter(value = AccessLevel.NONE)
-    @NotNull
     private long idUser;
     @Column(name = "email")
     @Pattern (regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,10}$")
@@ -39,5 +41,12 @@ public class Web_User {
     @NotNull
     private Role role;
     @OneToOne(mappedBy = "webUser")
+  //  @Cascade(CascadeType.ALL)
     private Customer customer;
+    
+    public Web_User (String email,String password,Role role) {
+    	this.email = email;
+    	this.password = password;
+    	this.role = role;
+    }
 }

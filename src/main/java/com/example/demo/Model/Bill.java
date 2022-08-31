@@ -21,7 +21,6 @@ public class Bill {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="IdBi")
-    @NotNull
     @Setter(value = AccessLevel.NONE)
     private long idBi;
     @NotNull
@@ -36,4 +35,11 @@ public class Bill {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id", referencedColumnName = "idCO")
     private Customer_Order order;
+    
+    public Bill(Payment_Method paymentMethod,Date paymentDate,long invoiceNumber,Customer_Order order) {
+    	this.paymentMethod = paymentMethod;
+    	this.paymentDate = paymentDate;
+    	this.invoiceNumber = invoiceNumber;
+    	this.order = order;
+    }
 }

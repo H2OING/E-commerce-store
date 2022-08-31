@@ -24,7 +24,6 @@ public class Cart {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="IdCart")
     @Setter(value = AccessLevel.NONE)
-    @NotNull
     private long idCart;
     @Column(name = "total")
     private BigDecimal total;
@@ -37,9 +36,20 @@ public class Cart {
     private Customer_Order order;
     
     @ManyToMany(mappedBy = "carts")
+    
     private Collection<Product> products = new ArrayList<Product>();
+
     
     public void addProducts(Product product) {
     	products.add(product);
     }
+    
+    public Cart (BigDecimal total, boolean isEmpty,Customer customer,Collection<Product> products) {
+    	this.total = total;
+    	this.isEmpty = isEmpty;
+    	this.customer = customer;
+    	this.products = products;
+    	
+    }
+
 }

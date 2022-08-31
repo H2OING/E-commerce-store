@@ -8,6 +8,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -23,9 +25,14 @@ public class Web_User {
     @NotNull
     private long idUser;
     @Column(name = "email")
+    @Pattern (regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,10}$")
+    @Size(min=5, max=30)
     @NotNull
     private String email;
+
     @Column(name = "password")
+    @Pattern (regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")
+    //atleast 1 capital letter, 1 number and 1 speacial character (Password must be atleast 8 character)
     @NotNull
     private String password;
     @Column(name = "role")

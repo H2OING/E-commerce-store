@@ -45,10 +45,11 @@ public class Bill_Service {
         }
     }
 
-    public void deleteBill(Long id){
+    public boolean deleteBill(Long id){
         Optional<Bill> optionalBill = billRepository.findById(id);
         if(optionalBill.isPresent()){
             billRepository.deleteById(id);
+            return true;
         } else{
             throw new EntityNotFoundException();
         }

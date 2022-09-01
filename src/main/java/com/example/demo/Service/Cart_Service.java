@@ -1,7 +1,6 @@
 package com.example.demo.Service;
 
 import com.example.demo.Model.Cart;
-import com.example.demo.Model.Customer;
 import com.example.demo.Model.Product;
 import com.example.demo.Model.Web_User;
 import com.example.demo.Repository.Cart_Repository;
@@ -64,12 +63,11 @@ public class Cart_Service {
         }
     }
     
-    public void addToCart(Web_User user, long id, Customer customer, boolean answer) { 
+    public void addToCart(Web_User user, long id,  boolean answer) { 
     	//Dunno if this will work .perhaps need to add quantity in cart class
     	Collection<Product> prod = (Collection<Product>) prodRepo.findById(id).get();
     	Cart cart = new Cart();
     	cart.setProducts(prod);
-    	cart.setCustomer(customer);
     	cart.setEmpty(answer);
     	cartRepository.save(cart);
     }

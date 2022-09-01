@@ -51,8 +51,10 @@ public class Cart_Controller {
         return "deleteCart";
     }
     
-    //public String addToCart (@Valid Cart cart, @Valid Product prod, long id) {
-    	//Web_User user = new Web_User();
-    	//user.g);
-    //}
+    @PostMapping("/add")
+    public String addToCart (@Valid Cart cart, @Valid Product prod, long id) {
+    	Web_User user = new Web_User();
+    	cartService.addToCart(user, id, false);
+    	return "IDK";
+    }
 }

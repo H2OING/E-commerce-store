@@ -8,9 +8,10 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Getter
 @Setter
@@ -25,9 +26,14 @@ public class Web_User {
     @Setter(value = AccessLevel.NONE)
     private long idUser;
     @Column(name = "email")
+    @Pattern (regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,10}$")
+    @Size(min=5, max=30)
     @NotNull
     private String email;
+
     @Column(name = "password")
+    @Pattern (regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")
+    //atleast 1 capital letter, 1 number and 1 speacial character (Password must be atleast 8 character)
     @NotNull
     private String password;
     @Column(name = "role")
@@ -41,5 +47,15 @@ public class Web_User {
     	this.email = email;
     	this.password = password;
     	this.role = role;
+    }
+
+    //for the hash
+    public void setPasswordHashed(String password){
+      setPassword(new BCryptPasswordEncoder().encode(password));
+    }
+
+    //check if raw password matches with hashed
+    public boolean checkPassword(String password){
+      return new BCryptPasswordEncoder().matches(password, this.password);
     }
 }

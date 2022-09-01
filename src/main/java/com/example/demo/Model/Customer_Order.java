@@ -23,7 +23,6 @@ import java.util.Date;
 
 @Table(name = "Customer_Order")
 @Entity
-@RequiredArgsConstructor
 public class Customer_Order {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

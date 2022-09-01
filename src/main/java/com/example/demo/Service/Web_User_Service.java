@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.NotNull;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +17,18 @@ import java.util.Optional;
 public class Web_User_Service {
     @Autowired
     Web_User_Repository webUserRepository;
+
+
+    private static boolean isLoggedIn = false;
+
+    
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
+    }
 
     public List<Web_User> getAllWebUsers(){
         return webUserRepository.findAll();
@@ -55,4 +69,17 @@ public class Web_User_Service {
             throw new EntityNotFoundException();
         }
     }
+
+    public boolean getWebUserByEmailAndPassword(@NotNull String email, @NotNull String password) {
+        if(webUserRepository.existsByEmail(email)){
+            Web_User wUser = webUserRepository.findByEmail(email);
+            if(wUser.checkPassword(password)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+   
 }

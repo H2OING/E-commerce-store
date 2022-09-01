@@ -2,6 +2,8 @@ package com.example.demo.Controller;
 
 import com.example.demo.Model.Bill;
 import com.example.demo.Model.Cart;
+import com.example.demo.Model.Product;
+import com.example.demo.Model.Web_User;
 import com.example.demo.Service.Cart_Service;
 
 import javax.validation.Valid;
@@ -16,6 +18,8 @@ public class Cart_Controller {
 
     @Autowired
     Cart_Service cartService;
+   // @Autowired
+    //Custo
 
     @GetMapping(value = "/admin/carts")
     public String getAllCarts(Model model){
@@ -46,4 +50,9 @@ public class Cart_Controller {
         cartService.deleteCart(id);
         return "deleteCart";
     }
+    
+    //public String addToCart (@Valid Cart cart, @Valid Product prod, long id) {
+    	//Web_User user = new Web_User();
+    	//user.g);
+    //}
 }

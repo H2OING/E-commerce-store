@@ -2,6 +2,9 @@ package com.example.demo.Controller;
 
 import com.example.demo.Model.Web_User;
 import com.example.demo.Service.Web_User_Service;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,13 +28,13 @@ public class Web_User_Controller {
     }
 
     @PostMapping(value = "PlaceholderMapping9")
-    public String createWebUser(Web_User webUser){
+    public String createWebUser(@Valid Web_User webUser){
         webUserService.createWebUser(webUser);
         return "createWebUser";
     }
 
     @PutMapping(value = "PlaceholderMapping10")
-    public String updateWebUser(@PathVariable(name = "id") Long id, Web_User webUser){
+    public String updateWebUser(@PathVariable(name = "id") Long id, @Valid Web_User webUser){
         webUserService.updateWebUser(id, webUser);
         return "updateWebUser";
     }

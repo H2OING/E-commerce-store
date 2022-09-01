@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
+import javax.validation.Valid;
+
 @Controller
 public class Product_Controller {
 
@@ -45,13 +47,13 @@ public class Product_Controller {
     }
 
     @PostMapping(value = "/admin/createProduct")
-    public String createProduct(Product product){
+    public String createProduct(@Valid Product product){
         productService.createProduct(product);
         return "createProduct";
     }
 
     @PutMapping(value = "/admin/updateProduct/{id}")
-    public String updateProduct(@PathVariable(name = "id") Long id, Product product){
+    public String updateProduct(@PathVariable(name = "id") Long id,@Valid Product product){
         productService.updateProduct(id, product);
         return "updateProduct";
     }

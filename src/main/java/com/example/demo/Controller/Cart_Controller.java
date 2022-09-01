@@ -3,6 +3,9 @@ package com.example.demo.Controller;
 import com.example.demo.Model.Bill;
 import com.example.demo.Model.Cart;
 import com.example.demo.Service.Cart_Service;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,13 +30,13 @@ public class Cart_Controller {
     }
 
     @PostMapping(value = "PlaceholderMapping1")
-    public String createCart(Cart cart){
+    public String createCart(@Valid Cart cart){
         cartService.createCart(cart);
         return "createCart";
     }
 
     @PutMapping(value = "/updateCart/{id}")
-    public String updateCart(@PathVariable(name = "id") Long id, Cart cart){
+    public String updateCart(@PathVariable(name = "id") Long id, @Valid Cart cart){
         cartService.updateCart(id, cart);
         return "updateCart";
     }

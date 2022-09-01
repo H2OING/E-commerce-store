@@ -2,6 +2,9 @@ package com.example.demo.Controller;
 
 import com.example.demo.Model.Customer;
 import com.example.demo.Service.Customer_Service;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,13 +29,13 @@ public class Customer_Controller {
     }
 
     @PostMapping(value = "/register")
-    public String createCustomer(Customer customer){
+    public String createCustomer(@Valid Customer customer){
         customerService.createCustomer(customer);
         return "register";
     }
 
     @PutMapping(value = "PlaceholderMapping2")
-    public String updateCustomer(@PathVariable(name = "id") Long id, Customer customer){
+    public String updateCustomer(@PathVariable(name = "id") Long id, @Valid Customer customer){
         customerService.updateCustomer(id, customer);
         return "updateCustomer";
     }

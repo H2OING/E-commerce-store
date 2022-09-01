@@ -20,10 +20,10 @@ public class Login_Controller {
 	}
 
 	@PostMapping("/login")
-    public String postInsertNewEmployee(Web_User wUser){
+    public String postInsertWebUser(Web_User wUser){
             if(webUserService.getWebUserByEmailAndPassword(wUser.getEmail(), wUser.getPassword())) {
 				webUserService.setLoggedIn(true);
-                return "redirect:/employee/showAll";
+                return "redirect:/home";
 			}
             else {
                 return "login";

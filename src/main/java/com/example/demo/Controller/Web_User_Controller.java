@@ -24,10 +24,21 @@ public class Web_User_Controller {
         return "webUser";
     }
 
-    @PostMapping(value = "PlaceholderMapping9")
-    public String createWebUser(Web_User webUser){
+    @GetMapping(value = "/register")
+    public String showRegistrationForm(Model model){
+        model.addAttribute("webUser", new Web_User());
+        return "registration";
+    }
+
+    @GetMapping(value = "/login")
+    public String showLoginForm(){
+        return "login";
+    }
+
+    @PostMapping(value = "/register")
+    public String createWebUser(@ModelAttribute("webUser") Web_User webUser){
         webUserService.createWebUser(webUser);
-        return "createWebUser";
+        return "redirect:/register?success";
     }
 
     @PutMapping(value = "PlaceholderMapping10")

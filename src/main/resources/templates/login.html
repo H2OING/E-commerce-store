@@ -2,13 +2,13 @@
 <html xmlns:th="https://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Accenstore: Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
-    <link rel="stylesheet" th:href="@{/productDetails.css}"/>
+    <link rel="stylesheet" th:href="@{/product.css}"/>
 </head>
 <body>
 
@@ -41,49 +41,43 @@
         </div>
     </div>
 </nav>
-<div class="container">
-    <div class="col-lg-8 border p-3 main-section bg-white">
-        <div class="row m-0">
-            <div class="col-lg-4 left-side-product-box pb-3" th:style="'background:url(' + @{'/image/' + ${product.idP}} + ') no-repeat center;'">
 
-            </div>
-            <div class="col-lg-8">
-                <div class="right-side-pro-detail border p-3 m-0">
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <br>
+            <h1>Login</h1>
+            <form th:action="@{/login}" method="post">
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger"> Invalid email or password.</div>
+                </div>
+
+                <div th:if="${param.logout}">
+                    <div class="alert alert-info"> You have been logged out successfully.</div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="username">Email</label>
+                    <input id="username" name="username" type="text" class="form-control" placeholder="Enter email address" required="autofocus"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="password">Password</label>
+                    <input id="password" name="password" type="password" class="form-control" required="autofocus"/>
+                </div>
+                <br>
+                <div class="form-group">
                     <div class="row">
-                        <div class="col-lg-12">
-                            <p class="m-0 p-0" th:text="${product.name}"></p>
-                        </div>
-                        <div class="col-lg-12">
-                            <p class="m-0 p-0 price-pro" th:text="${product.price + '€'}"></p>
-                            <hr class="p-0 m-0">
-                        </div>
-                        <div class="col-lg-12 pt-2">
-                            <h5>Product description</h5>
-                            <span th:text="${product.description}"></span>
-                            <hr class="m-0 pt-2 mt-2">
-                        </div>
-                        <div class="col-lg-12">
-                            <h6>In stock : <a th:text="${product.quantity}"></a></h6>
-                        </div>
-                        <div class="col-lg-12">
-                            <h6>Quantity :</h6>
-                            <input type="number" class="form-control text-center w-100" value="1">
-                        </div>
-                        <div class="col-lg-12 mt-3">
-                            <div class="row">
-                                <div class="col-lg-6 pb-2">
-                                    <a href="#" class="btn btn-danger w-100">Add To Cart</a>
-                                </div>
-                                <div class="col-lg-6">
-                                    <a href="#" class="btn btn-success w-100">Shop Now</a>
-                                </div>
-                            </div>
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-primary" value="Log in"/>
                         </div>
                     </div>
                 </div>
+            </form>
+            <div class="form-group">
+                <span>New user?<a href="/" th:href="@{/register}">Register</a></span>
             </div>
         </div>
     </div>
 </div>
+
 </body>
 </html>

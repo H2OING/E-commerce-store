@@ -31,24 +31,23 @@ public class Cart {
     @Column(name = "is_empty")
     private boolean isEmpty;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id", referencedColumnName = "idCu")
-    private Customer customer;
+    @JoinColumn(name = "user_id", referencedColumnName = "IdUser")
+    private Web_User webUser;
     @OneToOne(mappedBy = "cart")
     private Customer_Order order;
     
     @ManyToMany(mappedBy = "carts")
     
     private Collection<Product> products = new ArrayList<Product>();
-
     
     public void addProducts(Product product) {
     	products.add(product);
     }
     
-    public Cart (BigDecimal total, boolean isEmpty,Customer customer,Collection<Product> products) {
+    public Cart (BigDecimal total, boolean isEmpty,Web_User webUser,Collection<Product> products) {
     	this.total = total;
     	this.isEmpty = isEmpty;
-    	this.customer = customer;
+    	this.webUser = webUser;
     	this.products = products;
     	
     }

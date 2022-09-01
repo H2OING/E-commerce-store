@@ -46,7 +46,7 @@ public class Cart_Service {
             Cart existingCart = optionalCart.get();
             existingCart.setTotal(cart.getTotal());
             existingCart.setEmpty(cart.isEmpty());
-            existingCart.setCustomer(cart.getCustomer());
+            existingCart.setWebUser(cart.getWebUser());
             existingCart.setOrder(cart.getOrder());
             existingCart.setProducts(cart.getProducts());
             return cartRepository.save(existingCart);

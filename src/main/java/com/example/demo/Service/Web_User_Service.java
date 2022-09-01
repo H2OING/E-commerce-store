@@ -14,7 +14,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+<<<<<<< HEAD
 import java.util.Collection;
+=======
+import javax.validation.constraints.NotNull;
+
+>>>>>>> ba9cec44773fbe2e560dac14d6324deabaf54aa4
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,6 +30,18 @@ public class Web_User_Service implements UserDetailsService {
     Web_User_Repository webUserRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+
+    private static boolean isLoggedIn = false;
+
+    
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
+    }
 
     public List<Web_User> getAllWebUsers(){
         return webUserRepository.findAll();
@@ -67,6 +84,7 @@ public class Web_User_Service implements UserDetailsService {
         }
     }
 
+<<<<<<< HEAD
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Web_User webUser = webUserRepository.findByEmail(username);
@@ -79,4 +97,18 @@ public class Web_User_Service implements UserDetailsService {
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.name())).collect(Collectors.toList());
     }
+=======
+    public boolean getWebUserByEmailAndPassword(@NotNull String email, @NotNull String password) {
+        if(webUserRepository.existsByEmail(email)){
+            Web_User wUser = webUserRepository.findByEmail(email);
+            if(wUser.checkPassword(password)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+   
+>>>>>>> ba9cec44773fbe2e560dac14d6324deabaf54aa4
 }

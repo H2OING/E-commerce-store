@@ -26,7 +26,6 @@ public class Web_User {
     @Column(name="IdUser")
     @Setter(value = AccessLevel.NONE)
     private long idUser;
-<<<<<<< HEAD
     @Column(name = "name")
     @NotNull
     @Pattern(regexp = "[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+", message = "Invalid input for name")
@@ -37,23 +36,17 @@ public class Web_User {
     @Pattern(regexp = "[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+", message = "Invalid input for surname")
     @Size(min = 2, max = 30 ,message = "Invalid input length for surname")
     private String surname;
-    @Column(name = "email", unique = true)
-    @NotNull
-    private String email;
     @Column(name = "phone_number")
     @NotNull
     private String phoneNumber;
     @Column(name = "address")
     @NotNull
     private String address;
-=======
     @Column(name = "email")
     @Pattern (regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,10}$")
     @Size(min=5, max=30)
     @NotNull
     private String email;
-
->>>>>>> ba9cec44773fbe2e560dac14d6324deabaf54aa4
     @Column(name = "password")
     @Pattern (regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")
     //atleast 1 capital letter, 1 number and 1 speacial character (Password must be atleast 8 character)

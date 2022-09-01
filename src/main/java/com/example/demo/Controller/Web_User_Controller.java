@@ -30,11 +30,6 @@ public class Web_User_Controller {
         return "registration";
     }
 
-    @GetMapping(value = "/login")
-    public String showLoginForm(){
-        return "login";
-    }
-
     @PostMapping(value = "/register")
     public String createWebUser(@ModelAttribute("webUser") Web_User webUser){
         webUserService.createWebUser(webUser);

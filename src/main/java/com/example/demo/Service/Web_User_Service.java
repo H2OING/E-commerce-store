@@ -1,5 +1,6 @@
 package com.example.demo.Service;
 
+import com.example.demo.Model.Cart;
 import com.example.demo.Model.Role;
 import com.example.demo.Model.Web_User;
 import com.example.demo.Repository.Web_User_Repository;
@@ -14,12 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-
 import javax.validation.constraints.NotNull;
-
-
 import java.util.Collection;
-
+import java.util.Collection;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,10 +30,8 @@ public class Web_User_Service implements UserDetailsService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-
     private static boolean isLoggedIn = false;
 
-    
     public boolean isLoggedIn() {
         return isLoggedIn;
     }
@@ -59,6 +56,7 @@ public class Web_User_Service implements UserDetailsService {
     public Web_User createWebUser(Web_User webUser){
         webUser.setRole(Role.CUSTOMER);
         webUser.setPassword(passwordEncoder.encode(webUser.getPassword()));
+        webUser.setCart(new Cart());
         return webUserRepository.save(webUser);
     }
 
@@ -85,18 +83,8 @@ public class Web_User_Service implements UserDetailsService {
     }
 
 
-    public boolean getWebUserByEmailAndPassword(@NotNull String email, @NotNull String password) {
-        if(webUserRepository.existsByEmail(email)){
-            Web_User wUser = webUserRepository.findByEmail(email);
-            if(wUser.checkPassword(password)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
-    }
-   
+
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -109,6 +97,19 @@ public class Web_User_Service implements UserDetailsService {
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.name())).collect(Collectors.toList());
+    }
+
+
+    public boolean getWebUserByEmailAndPassword(@NotNull String email, @NotNull String password) {
+        if(webUserRepository.existsByEmail(email)){
+            Web_User wUser = webUserRepository.findByEmail(email);
+            if(wUser.checkPassword(password)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 
 }

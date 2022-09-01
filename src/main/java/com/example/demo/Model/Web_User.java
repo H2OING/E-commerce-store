@@ -36,15 +36,18 @@ public class Web_User {
     @Pattern(regexp = "[A-ZŽĶĻŅČĢŠĪĀĒŪ]{1}[a-zžšķļņģčīāūē\\s]+", message = "Invalid input for surname")
     @Size(min = 2, max = 30 ,message = "Invalid input length for surname")
     private String surname;
-    @Column(name = "email", unique = true)
-    @NotNull
-    private String email;
     @Column(name = "phone_number")
     @NotNull
     private String phoneNumber;
     @Column(name = "address")
     @NotNull
     private String address;
+
+    @Column(name = "email")
+    @Pattern (regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,10}$")
+    @Size(min=5, max=30)
+    @NotNull
+    private String email;
 
     @Column(name = "password")
     @Pattern (regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")

@@ -10,15 +10,12 @@ import com.example.demo.Service.Web_User_Service;
 
 @Controller
 public class Login_Controller {
-    
     @Autowired
     Web_User_Service webUserService;
-
     @GetMapping("/login")
 	public String login(Web_User wUser) {
 		return "login";
 	}
-
 	@PostMapping("/login")
     public String postInsertWebUser(Web_User wUser){
             if(webUserService.getWebUserByEmailAndPassword(wUser.getEmail(), wUser.getPassword())) {
@@ -29,7 +26,6 @@ public class Login_Controller {
                 return "login";
 			}
     }
-
 	@GetMapping("/logout")
 	public String logout() {
 		webUserService.setLoggedIn(false);

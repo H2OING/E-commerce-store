@@ -45,10 +45,10 @@ public class SecurityConfiguration{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests().antMatchers("/register**", "/js/**", "/css/**", "/img/**").permitAll()
-                                                                                        .anyRequest().authenticated().and().formLogin().
-                                                                                        loginPage("/login").permitAll().and().logout().invalidateHttpSession(true).
-                                                                                        clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).
-                                                                                        logoutSuccessUrl("/login?logout").permitAll();
+        .anyRequest().authenticated().and().formLogin().
+        loginPage("/login").permitAll().and().logout().invalidateHttpSession(true).
+        clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).
+        logoutSuccessUrl("/login?logout").permitAll();
         return http.build();
     }
 }

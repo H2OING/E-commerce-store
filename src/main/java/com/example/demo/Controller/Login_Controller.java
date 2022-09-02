@@ -10,26 +10,22 @@ import com.example.demo.Service.Web_User_Service;
 
 @Controller
 public class Login_Controller {
-    
     @Autowired
     Web_User_Service webUserService;
-
     @GetMapping("/login")
 	public String login(Web_User wUser) {
 		return "login";
 	}
-
 	@PostMapping("/login")
     public String postInsertNewEmployee(Web_User wUser){
             if(webUserService.getWebUserByEmailAndPassword(wUser.getEmail(), wUser.getPassword())) {
 				webUserService.setLoggedIn(true);
-                return "redirect:/employee/showAll";
+                return "redirect:/home";
 			}
             else {
                 return "login";
 			}
     }
-
 	@GetMapping("/logout")
 	public String logout() {
 		webUserService.setLoggedIn(false);

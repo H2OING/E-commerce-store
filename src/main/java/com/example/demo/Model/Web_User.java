@@ -48,7 +48,7 @@ public class Web_User {
     @NotNull
     private String email;
     @Column(name = "password")
-    @Pattern (regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")
+    //@Pattern (regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")
     //atleast 1 capital letter, 1 number and 1 speacial character (Password must be atleast 8 character)
     @NotNull
     private String password;

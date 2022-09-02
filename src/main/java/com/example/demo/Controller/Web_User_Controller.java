@@ -12,10 +12,10 @@ public class Web_User_Controller {
     @Autowired
     Web_User_Service webUserService;
 
-    @GetMapping("PlaceholderMapping7")
+    @GetMapping("/admin/webuser")
     public String getAllWebUsers(Model model){
-        model.addAttribute("webUsers", webUserService.getAllWebUsers());
-        return "webUsers";
+        model.addAttribute("webUser", webUserService.getAllWebUsers());
+        return "webUser-show-all";
     }
 
     @GetMapping(value = "PlaceholderMapping8")

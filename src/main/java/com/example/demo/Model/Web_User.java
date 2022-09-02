@@ -48,7 +48,7 @@ public class Web_User {
     @NotNull
     private String email;
     @Column(name = "password")
-    @Pattern (regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")
+    //@Pattern (regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")
     //atleast 1 capital letter, 1 number and 1 speacial character (Password must be atleast 8 character)
     @NotNull
     private String password;
@@ -61,7 +61,7 @@ public class Web_User {
     public Web_User (String name, String surname, String email, String phoneNumber, String address, String password, Role role) {
         this.name = name;
         this.surname = surname;
-    	this.email = email;
+    	  this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
     	this.password = password;

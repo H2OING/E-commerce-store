@@ -56,7 +56,7 @@ public class Web_User_Service implements UserDetailsService {
     }
 
     public Web_User createWebUser(Web_User webUser){
-        webUser.setRole(Role.CUSTOMER);
+        webUser.setRole(Role.ROLE_CUSTOMER);
         webUser.setPassword(passwordEncoder.encode(webUser.getPassword()));
         cartRepository.save(new Cart(BigDecimal.ZERO, true, webUser, new ArrayList<Product>()));
         return webUserRepository.save(webUser);
@@ -90,11 +90,11 @@ public class Web_User_Service implements UserDetailsService {
         if(webUser == null){
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        return new User(webUser.getEmail(), webUser.getPassword(), mapRolesToAuthorities(List.of(webUser.getRole())));
+        return new User(webUser.getEmail(), webUser.getPassword(), mapRolesToAuthorities(List.of(webUser.getRole().name())));
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.name())).collect(Collectors.toList());
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<String> roles){
+        return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     public boolean getWebUserByEmailAndPassword(@NotNull String email, @NotNull String password) {

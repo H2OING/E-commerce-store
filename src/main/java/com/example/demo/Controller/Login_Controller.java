@@ -31,5 +31,4 @@ public class Login_Controller {
 		webUserService.setLoggedIn(false);
 		return "redirect:/login";
 	}
-    
 }

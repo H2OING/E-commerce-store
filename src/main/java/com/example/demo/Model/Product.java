@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
 import java.sql.Blob;
@@ -46,7 +47,7 @@ public class Product {
     @Min(value = 1)
     @Max(value = 5000)
     private BigDecimal price;
-    @Column(name = "picture")
+    @Column(name = "picture", columnDefinition = "blob")
     private byte[] picture;
     
     @ManyToMany

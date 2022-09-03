@@ -42,7 +42,7 @@ public class Web_User {
     @Column(name = "address")
     @NotNull
     private String address;
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     @Pattern (regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,10}$")
     @Size(min=5, max=30)
     @NotNull

@@ -9,6 +9,7 @@ import com.example.demo.Repository.Web_User_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -53,6 +54,11 @@ public class Web_User_Service implements UserDetailsService {
         } else{
             throw new EntityNotFoundException();
         }
+    }
+
+    public Web_User getLoggedInWebUser(){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return webUserRepository.findByEmail(user.getUsername());
     }
 
     public Web_User createWebUser(Web_User webUser){

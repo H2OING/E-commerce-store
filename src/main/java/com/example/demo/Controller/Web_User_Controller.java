@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
+
 @Controller
 public class Web_User_Controller {
     @Autowired
@@ -24,6 +26,12 @@ public class Web_User_Controller {
         return "webUser";
     }
 
+    @GetMapping(value = "/user/accountDetails")
+    public String getLoggedInUserDetails(Model model){
+        model.addAttribute("webUser", webUserService.getLoggedInWebUser());
+        return "accountDetails";
+    }
+
     @GetMapping(value = "/register")
     public String showRegistrationForm(Model model){
         model.addAttribute("webUser", new Web_User());
@@ -32,8 +40,13 @@ public class Web_User_Controller {
 
     @PostMapping(value = "/register")
     public String createWebUser(@ModelAttribute("webUser") Web_User webUser){
-        webUserService.createWebUser(webUser);
-        return "redirect:/register?success";
+        try{
+            webUserService.createWebUser(webUser);
+            return "redirect:/register?success";
+        } catch (Exception e){
+            return "redirect:/register?error";
+        }
+
     }
 
     @PutMapping(value = "/admin/webuser/update/{id}")

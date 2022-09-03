@@ -18,7 +18,7 @@ public class Web_User_Controller {
         return "webUser-show-all";
     }
 
-    @GetMapping(value = "PlaceholderMapping8")
+    @GetMapping(value = "/admin/webuser/{id}")
     public String getWebUser(@PathVariable(name = "id") Long id, Model model){
         model.addAttribute("webUser", webUserService.getWebUserById(id));
         return "webUser";
@@ -36,15 +36,15 @@ public class Web_User_Controller {
         return "redirect:/register?success";
     }
 
-    @PutMapping(value = "PlaceholderMapping10")
+    @PutMapping(value = "/admin/webuser/update/{id}")
     public String updateWebUser(@PathVariable(name = "id") Long id, Web_User webUser){
         webUserService.updateWebUser(id, webUser);
         return "updateWebUser";
     }
 
-    @RequestMapping(value = "PlaceholderMapping11", method = {RequestMethod.GET, RequestMethod.DELETE})
+    @RequestMapping(value = "/admin/webuser/delete/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})
     public String deleteWebUser(@PathVariable(name = "id") Long id){
         webUserService.deleteWebUser(id);
-        return "deleteWebUser";
+        return "redirect:/admin/webuser";
     }
 }

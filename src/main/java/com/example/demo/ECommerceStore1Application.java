@@ -27,7 +27,8 @@ public class ECommerceStore1Application {
 			
 			@Override
 			public void run(String... args) throws Exception {
-				//Web_User user = new Web_User("Markuss","Karklins", "markuss@gmail.com", "2282828" ,"maja", "12345", Role.CUSTOMER);
+				//Web_User user = new Web_User("Markuss","Karklins", "markuss@gmail.com", "2282828" ,"maja", "12345", Role.ROLE_ADMIN);
+				//user.setPasswordHashed(user.getPassword());
 				//WRepo.save(user);
 				//Customer customer = new Customer("Mike", "Tyson", "29857483", "Pumpkin Street",user );
 				//CuRepo.save(customer);

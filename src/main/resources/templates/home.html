@@ -40,6 +40,11 @@
             <li><a class="dropdown-item text-dark" href="/accountDetails">Account details</a></li>
             <li><a class="dropdown-item text-dark" href="/logout">Logout</a></li>
           </ul>
+          <ul  sec:authorize="hasRole('ADMIN')" class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item text-dark" href="/accountDetails">Account details</a></li>
+            <li><a class="dropdown-item text-dark" href="/admin/webuser">Admin page</a></li>
+            <li><a class="dropdown-item text-dark" href="/logout">Logout</a></li>
+          </ul>
         </li>
       </ul>
     </div>

@@ -13,5 +13,5 @@ import java.util.Optional;
 public interface Product_Repository extends JpaRepository<Product, Long> {
     List<Product> findAllByCategory(Category category);
 
-	Optional<Cart> findByProductIdP(long id);
+	//Optional<Cart> findByProductIdP(long id);
 }

@@ -54,7 +54,8 @@ public class Cart_Controller {
     @PostMapping("/add")
     public String addToCart (@Valid Cart cart, @Valid Product prod, long id) {
     	Web_User user = new Web_User();
+    	//user.getIdUser()
     	cartService.addToCart(user, id, false);
-    	return "IDK";
+    	return "cart";
     }
 }

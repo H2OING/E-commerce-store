@@ -43,7 +43,7 @@ public class Web_User {
     @NotNull
     private String address;
     @Column(name = "email", unique = true)
-    @Pattern (regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,10}$")
+    @Pattern (regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,10}$", message = "Invalid input for email")
     @Size(min=5, max=30)
     @NotNull
     private String email;
@@ -53,7 +53,7 @@ public class Web_User {
     @NotNull
     private String password;
     @Column(name = "role")
-    @NotNull
+    //@NotNull
     private Role role;
     @OneToOne(mappedBy = "webUser")
     private Cart cart;

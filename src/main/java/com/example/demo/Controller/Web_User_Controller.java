@@ -1,13 +1,17 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Model.Role;
 import com.example.demo.Model.Web_User;
 import com.example.demo.Service.Web_User_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 @Controller
 public class Web_User_Controller {
@@ -39,14 +43,17 @@ public class Web_User_Controller {
     }
 
     @PostMapping(value = "/register")
-    public String createWebUser(@ModelAttribute("webUser") Web_User webUser){
-        try{
-            webUserService.createWebUser(webUser);
-            return "redirect:/register?success";
+    public String createWebUser(@ModelAttribute("webUser") @Valid Web_User webUser, BindingResult result){
+        try {
+            if (result.hasErrors()) {
+                return "registration";
+            } else {
+                webUserService.createWebUser(webUser);
+                return "redirect:/register?success";
+            }
         } catch (Exception e){
             return "redirect:/register?error";
         }
-
     }
 
     @PutMapping(value = "/admin/webuser/update/{id}")

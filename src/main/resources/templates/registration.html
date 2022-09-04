@@ -57,14 +57,17 @@
                 <div class="form-group">
                     <label class="control-label" for="name">Name</label>
                     <input id="name" class="form-control" th:field="*{name}" required="autofocus"/>
+                    <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="surname">Surname</label>
                     <input id="surname" class="form-control" th:field="*{surname}" required="autofocus"/>
+                    <div class="alert alert-warning" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="email">Email</label>
                     <input id="email" class="form-control" th:field="*{email}" required="autofocus"/>
+                    <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="phoneNumber">Phone number</label>

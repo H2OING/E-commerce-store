@@ -1,5 +1,7 @@
 body{
-    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+  /* Created with https://www.css-gradient.com */
+ background: rgb(190,44,44);
+ background: linear-gradient(90deg, rgba(190,44,44,1) 0%, rgba(233,57,69,1) 45%, rgba(240,193,193,1) 100%);
 }
 .emp-profile{
     padding: 3%;

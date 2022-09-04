@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Model.Role;
 import com.example.demo.Model.Web_User;
+import com.example.demo.Service.Category_Service;
 import com.example.demo.Service.Web_User_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import java.sql.SQLIntegrityConstraintViolationException;
 public class Web_User_Controller {
     @Autowired
     Web_User_Service webUserService;
+    @Autowired
+    Category_Service categoryService; //For navigation bar
 
     @GetMapping("/admin/webuser")
     public String getAllWebUsers(Model model){
@@ -39,6 +42,7 @@ public class Web_User_Controller {
     @GetMapping(value = "/register")
     public String showRegistrationForm(Model model){
         model.addAttribute("webUser", new Web_User());
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "registration";
     }
 

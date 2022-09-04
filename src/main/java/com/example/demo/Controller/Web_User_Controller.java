@@ -2,9 +2,13 @@ package com.example.demo.Controller;
 
 import com.example.demo.Model.Web_User;
 import com.example.demo.Service.Web_User_Service;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -36,11 +40,31 @@ public class Web_User_Controller {
         return "redirect:/register?success";
     }
 
-    @PutMapping(value = "/admin/webuser/update/{id}")
-    public String updateWebUser(@PathVariable(name = "id") Long id, Web_User webUser){
-        webUserService.updateWebUser(id, webUser);
-        return "updateWebUser";
+    @GetMapping(value = "/admin/webuser/update/{id}")
+    public String updateWebUser(@PathVariable(name = "id") Long id, Model model){
+        try{
+            model.addAttribute("webuser", webUserService.getWebUserById(id));
+            return "webUser-update";
+        }
+        catch(Exception e){
+            return "error";
+        }
     }
+    @PostMapping("/admin/webuser/update/{id}")
+    public String postUpdateCourse(@PathVariable(name = "id") Long id,@Valid Web_User webUser, BindingResult result, Model model){
+        
+        if(!result.hasErrors()){
+            if(webUserService.updateWebUser(id, webUser))
+                return "redirect:/admin/webuser/" + id;
+            else
+                return "redirect:/error";
+        }
+        else{
+            model.addAttribute("webuser", webUserService.getAllWebUsers());
+            return"webUser-update";
+        }
+    }
+
 
     @RequestMapping(value = "/admin/webuser/delete/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})
     public String deleteWebUser(@PathVariable(name = "id") Long id){

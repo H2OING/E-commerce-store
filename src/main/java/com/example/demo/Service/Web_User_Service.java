@@ -62,14 +62,19 @@ public class Web_User_Service implements UserDetailsService {
         return webUserRepository.save(webUser);
     }
 
-    public Web_User updateWebUser(Long id, Web_User webUser){
+    public boolean updateWebUser(Long id, Web_User webUser){
         Optional<Web_User> optionalWebUser = webUserRepository.findById(id);
         if(optionalWebUser.isPresent()){
             Web_User existingWebUser = optionalWebUser.get();
+            existingWebUser.setName(webUser.getName());
+            existingWebUser.setSurname(webUser.getSurname());
+            existingWebUser.setPhoneNumber(webUser.getPhoneNumber());
             existingWebUser.setEmail(webUser.getEmail());
+
             existingWebUser.setPassword(webUser.getPassword());
             existingWebUser.setRole(webUser.getRole());
-            return webUserRepository.save(existingWebUser);
+            webUserRepository.save(existingWebUser);
+            return true;
         } else{
             throw new EntityNotFoundException();
         }

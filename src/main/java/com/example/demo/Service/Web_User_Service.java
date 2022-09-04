@@ -61,7 +61,7 @@ public class Web_User_Service implements UserDetailsService {
     }
 
     public Web_User createWebUser(Web_User webUser){
-        webUser.setRole(Role.ROLE_CUSTOMER);
+        webUser.setRole(Role.ROLE_ADMIN);
         webUser.setPassword(passwordEncoder.encode(webUser.getPassword()));
         cartRepository.save(new Cart(BigDecimal.ZERO, true, webUser, new ArrayList<Product>()));
         return webUserRepository.save(webUser);

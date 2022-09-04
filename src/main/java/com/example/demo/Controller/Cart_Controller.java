@@ -5,6 +5,9 @@ import com.example.demo.Model.Cart;
 import com.example.demo.Model.Product;
 import com.example.demo.Model.Web_User;
 import com.example.demo.Service.Cart_Service;
+import com.example.demo.Service.Product_Service;
+
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -15,9 +18,10 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class Cart_Controller {
-
     @Autowired
     Cart_Service cartService;
+    @Autowired
+    Product_Service prodService;
    // @Autowired
     //Custo
 
@@ -53,9 +57,18 @@ public class Cart_Controller {
     
     @PostMapping("/add")
     public String addToCart (@Valid Cart cart, @Valid Product prod, long id) {
-    	Web_User user = new Web_User();
+    	//Web_User user = new Web_User();
     	//user.getIdUser()
-    	cartService.addToCart(user, id, false);
+    	//cartService.addToCart(user, id, false);
+    	return "PlaceHolder";
+    }
+    @GetMapping("/cart")
+    public String OpenCart(Cart cart, Model model) {
+    	List<Product> prod = prodService.getAllProducts();  //getAllProductsAddedToCart
+    	//Product prod = new Product();
+    	model.addAttribute("allProducts", prod);
+    	Cart carts = new Cart();
+    	model.addAttribute("cart", carts);
     	return "cart";
     }
 }

@@ -1,7 +1,18 @@
 package com.example.demo;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import com.example.demo.Model.Role;
+import com.example.demo.Model.Web_User;
+import com.example.demo.Repository.Bill_Repository;
+import com.example.demo.Repository.Cart_Repository;
+import com.example.demo.Repository.Category_Repository;
+import com.example.demo.Repository.Customer_Order_Repository;
+import com.example.demo.Repository.Product_Repository;
+import com.example.demo.Repository.Web_User_Repository;
 
 @SpringBootApplication
 public class ECommerceStore1Application {
@@ -9,14 +20,15 @@ public class ECommerceStore1Application {
 	public static void main(String[] args) {
 		SpringApplication.run(ECommerceStore1Application.class, args);
 	}
-	/*
+	
 	@Bean
-	public CommandLineRunner runner(Bill_Repository BRepo, Cart_Repository CRepo, Customer_Order_Repository CORepo, Customer_Repository CuRepo, Product_Repository ProdRepo, Web_User_Repository WRepo, Category_Repository catRepo) {
+	public CommandLineRunner runner(Bill_Repository BRepo, Cart_Repository CRepo, Customer_Order_Repository CORepo, Product_Repository ProdRepo, Web_User_Repository WRepo, Category_Repository catRepo) {
 		return new CommandLineRunner() {
 			
 			@Override
 			public void run(String... args) throws Exception {
-				//Web_User user = new Web_User("Tyson@gmail.com", "12345", Role.CUSTOMER);
+				//Web_User user = new Web_User("Markuss","Karklins", "markuss@gmail.com", "2282828" ,"maja", "12345", Role.ROLE_ADMIN);
+				//user.setPasswordHashed(user.getPassword());
 				//WRepo.save(user);
 				//Customer customer = new Customer("Mike", "Tyson", "29857483", "Pumpkin Street",user );
 				//CuRepo.save(customer);
@@ -35,6 +47,6 @@ public class ECommerceStore1Application {
 		
 	}
 
-	 */
+	 
 
 }

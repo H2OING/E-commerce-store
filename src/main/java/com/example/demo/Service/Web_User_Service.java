@@ -1,8 +1,10 @@
 package com.example.demo.Service;
 
 import com.example.demo.Model.Cart;
+import com.example.demo.Model.Product;
 import com.example.demo.Model.Role;
 import com.example.demo.Model.Web_User;
+import com.example.demo.Repository.Cart_Repository;
 import com.example.demo.Repository.Web_User_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,18 +17,23 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Collection;
+
+import java.math.BigDecimal;
+import java.util.*;
+
 import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class Web_User_Service implements UserDetailsService {
     @Autowired
     Web_User_Repository webUserRepository;
+    @Autowired
+    Cart_Repository cartRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -54,20 +61,25 @@ public class Web_User_Service implements UserDetailsService {
     }
 
     public Web_User createWebUser(Web_User webUser){
-        webUser.setRole(Role.CUSTOMER);
+        webUser.setRole(Role.ROLE_CUSTOMER);
         webUser.setPassword(passwordEncoder.encode(webUser.getPassword()));
-        webUser.setCart(new Cart());
+        cartRepository.save(new Cart(BigDecimal.ZERO, true, webUser, new ArrayList<Product>()));
         return webUserRepository.save(webUser);
     }
 
-    public Web_User updateWebUser(Long id, Web_User webUser){
+    public boolean updateWebUser(Long id, Web_User webUser){
         Optional<Web_User> optionalWebUser = webUserRepository.findById(id);
         if(optionalWebUser.isPresent()){
             Web_User existingWebUser = optionalWebUser.get();
+            existingWebUser.setName(webUser.getName());
+            existingWebUser.setSurname(webUser.getSurname());
+            existingWebUser.setPhoneNumber(webUser.getPhoneNumber());
             existingWebUser.setEmail(webUser.getEmail());
+
             existingWebUser.setPassword(webUser.getPassword());
             existingWebUser.setRole(webUser.getRole());
-            return webUserRepository.save(existingWebUser);
+            webUserRepository.save(existingWebUser);
+            return true;
         } else{
             throw new EntityNotFoundException();
         }
@@ -92,11 +104,11 @@ public class Web_User_Service implements UserDetailsService {
         if(webUser == null){
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        return new User(webUser.getEmail(), webUser.getPassword(), mapRolesToAuthorities(List.of(webUser.getRole())));
+        return new User(webUser.getEmail(), webUser.getPassword(), mapRolesToAuthorities(List.of(webUser.getRole().name())));
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.name())).collect(Collectors.toList());
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<String> roles){
+        return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
 

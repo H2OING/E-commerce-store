@@ -36,10 +36,9 @@ public class Cart {
     private Customer_Order order;
     
     @ManyToMany(mappedBy = "carts")
-    
     private Collection<Product> products = new ArrayList<Product>();
     
-    public void addProducts(Product product) {
+    public void addProduct(Product product) {
     	products.add(product);
     }
     
@@ -51,4 +50,7 @@ public class Cart {
     	
     }
 
+    public void removeProduct(Product product) {
+        products.remove(product);
+    }
 }

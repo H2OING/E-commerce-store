@@ -1,11 +1,16 @@
 package com.example.demo.Service;
 
 import com.example.demo.Model.Cart;
+import com.example.demo.Model.Product;
+import com.example.demo.Model.Web_User;
 import com.example.demo.Repository.Cart_Repository;
+import com.example.demo.Repository.Product_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +18,8 @@ import java.util.Optional;
 public class Cart_Service {
     @Autowired
     Cart_Repository cartRepository;
+    @Autowired
+    Product_Repository productRepository;
 
     public List<Cart> getAllCarts(){
         return cartRepository.findAll();
@@ -53,5 +60,23 @@ public class Cart_Service {
         } else{
             throw new EntityNotFoundException();
         }
+    }
+
+    public void addToCart(Long productId, int quantity, Web_User loggedInUser) {
+        Product product = productRepository.findById(productId).get();
+        Cart cart = loggedInUser.getCart();
+        cart.addProduct(product);
+        product.addCart(cart);
+        cartRepository.save(cart);
+        productRepository.save(product);
+    }
+
+    public void removeFromCart(Long productId, Web_User loggedInUser){
+        Product product = productRepository.findById(productId).get();
+        Cart cart = loggedInUser.getCart();
+        cart.removeProduct(product);
+        product.removeCart(cart);
+        cartRepository.save(cart);
+        productRepository.save(product);
     }
 }

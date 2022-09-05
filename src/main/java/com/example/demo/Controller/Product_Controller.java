@@ -27,14 +27,10 @@ public class Product_Controller {
     Product_Service productService;
     @Autowired
     Category_Service categoryService;
-
-    @Autowired
-    Cart_Service cartService;
-
     @Autowired
     Web_User_Service webUserService;
 
-    @GetMapping
+    @GetMapping("/home")
     public String getAllProducts(Model model){
 
         model.addAttribute("products", productService.getAllProducts());
@@ -50,6 +46,10 @@ public class Product_Controller {
     public String getProduct(@PathVariable(name = "id") Long id, Model model){
         model.addAttribute("product", productService.getProductById(id));
         model.addAttribute("categories", categoryService.getAllCategories());
+        if(webUserService.isLoggedIn()){
+            Collection<Product> products = webUserService.getLoggedInWebUser().getCart().getProducts();
+            model.addAttribute("cartProducts", products);
+        }
         return "product";
     }
 

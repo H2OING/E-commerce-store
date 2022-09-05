@@ -22,7 +22,6 @@ public class Category_Controller {
     Category_Service categoryService;
     @Autowired
     Product_Service productService;
-
     @Autowired
     Web_User_Service webUserService;
 

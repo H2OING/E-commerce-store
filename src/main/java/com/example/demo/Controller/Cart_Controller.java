@@ -29,12 +29,11 @@ public class Cart_Controller {
     Cart_Service cartService;
     @Autowired
     Web_User_Service webUserService;
-    @Autowired
-    Product_Service prodService;
-
 
     @GetMapping(value = "/user/cart")
-    private String showCartPage(){
+    private String showCartPage(Model model){
+        model.addAttribute("allProducts", webUserService.getLoggedInWebUser().getCart().getProducts());
+        model.addAttribute("cart", webUserService.getLoggedInWebUser().getCart());
         return "cart";
     }
     @GetMapping(value = "/admin/carts")
@@ -56,15 +55,15 @@ public class Cart_Controller {
     }
 
     @PostMapping(value = "/user/addToCart")
-    public String addToCart(HttpServletRequest request, Model model, @RequestParam("id") Long productId, @RequestParam("quantity") int quantity){
+    public String addToCart(@RequestParam("id") Long productId, @RequestParam("quantity") int quantity, @RequestParam("path") String path){
         cartService.addToCart(productId, quantity, webUserService.getLoggedInWebUser());
-        return "redirect:/";
+        return "redirect:"+path;
     }
 
-    @DeleteMapping(value = "/user/deleteFromCart/{id}")
-    public String removeFromCart(HttpServletRequest request, Model model, @PathVariable("id") Long productId){
+    @RequestMapping(value = "/user/deleteFromCart/{id}", method = {RequestMethod.DELETE, RequestMethod.GET})
+    public String removeFromCart(@PathVariable("id") Long productId){
         cartService.removeFromCart(productId, webUserService.getLoggedInWebUser());
-        return "redirect:/";
+        return "redirect:/user/cart";
     }
 
     @PutMapping(value = "/updateCart/{id}")

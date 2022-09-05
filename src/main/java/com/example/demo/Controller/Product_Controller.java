@@ -25,7 +25,7 @@ public class Product_Controller {
     @Autowired
     Category_Service categoryService;
 
-    @GetMapping(value = "/home")
+    @GetMapping//(value = "/home")
     public String getAllProducts(Model model){
         model.addAttribute("products", productService.getAllProducts());
         model.addAttribute("categories", categoryService.getAllCategories());

@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Model.Product;
 import com.example.demo.Model.Role;
 import com.example.demo.Model.Web_User;
 import com.example.demo.Service.Category_Service;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Collection;
 
 @Controller
 public class Web_User_Controller {
@@ -41,6 +43,10 @@ public class Web_User_Controller {
     public String getLoggedInUserDetails(Model model){
         model.addAttribute("webUser", webUserService.getLoggedInWebUser());
         model.addAttribute("categories", categoryService.getAllCategories());
+        if(webUserService.isLoggedIn()){
+            Collection<Product> products = webUserService.getLoggedInWebUser().getCart().getProducts();
+            model.addAttribute("cartProducts", products);
+        }
         return "accountDetails";
     }
 

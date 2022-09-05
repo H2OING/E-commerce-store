@@ -28,7 +28,6 @@ public class Product_Controller {
     @Autowired
     Category_Service categoryService;
 
-<<<<<<< HEAD
     @Autowired
     Cart_Service cartService;
 
@@ -36,9 +35,6 @@ public class Product_Controller {
     Web_User_Service webUserService;
 
     @GetMapping
-=======
-    @GetMapping(value = "/home")
->>>>>>> efbdfeee81175f91e934c233105742180e5a512f
     public String getAllProducts(Model model){
 
         model.addAttribute("products", productService.getAllProducts());

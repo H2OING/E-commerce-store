@@ -5,9 +5,7 @@ import com.example.demo.Model.Cart;
 import com.example.demo.Model.Product;
 import com.example.demo.Model.Web_User;
 import com.example.demo.Service.Cart_Service;
-<<<<<<< HEAD
 import com.example.demo.Service.Web_User_Service;
-=======
 import com.example.demo.Service.Product_Service;
 
 import java.util.List;
@@ -17,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
->>>>>>> efbdfeee81175f91e934c233105742180e5a512f
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,14 +28,15 @@ public class Cart_Controller {
     @Autowired
     Cart_Service cartService;
     @Autowired
-<<<<<<< HEAD
     Web_User_Service webUserService;
-=======
+    @Autowired
     Product_Service prodService;
-   // @Autowired
-    //Custo
->>>>>>> efbdfeee81175f91e934c233105742180e5a512f
 
+
+    @GetMapping(value = "/user/cart")
+    private String showCartPage(){
+        return "cart";
+    }
     @GetMapping(value = "/admin/carts")
     public String getAllCarts(Model model){
         model.addAttribute("carts", cartService.getAllCarts());
@@ -79,28 +77,5 @@ public class Cart_Controller {
     public String deleteCart(@PathVariable(name = "id") Long id){
         cartService.deleteCart(id);
         return "deleteCart";
-    }
-    
-    @PostMapping("/addToCart")
-    public String addToCart (HttpServletRequest req, Model model, @RequestParam("id") Long id, @RequestParam("quantity") int quantity) {
-    	String Stoken = (String) req.getSession(true).getAttribute("sessionToken");
-    	if(Stoken !=null) {  // reminder to think where to add session token
-    		Stoken = UUID.randomUUID().toString();
-    		req.getSession().setAttribute("sessionToken", Stoken);
-    		cartService.addToCart(id, Stoken, quantity, false);
-    	}else {
-    		// existing cart code
-    	}
-    	
-    	return "PlaceHolder";
-    }
-    @GetMapping("/cart")
-    public String OpenCart(Cart cart, Model model) {
-    	List<Product> prod = prodService.getAllProducts();  //getAllProductsAddedToCart
-    	//Product prod = new Product();
-    	model.addAttribute("allProducts", prod);
-    	Cart carts = new Cart();
-    	model.addAttribute("cart", carts);
-    	return "cart";
     }
 }

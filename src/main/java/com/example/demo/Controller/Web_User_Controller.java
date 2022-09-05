@@ -43,7 +43,7 @@ public class Web_User_Controller {
     @GetMapping("/admin/webuser/update/{id}")
     public String updateWebUser(@PathVariable(name = "id") Long id, Model model){
         try{
-            model.addAttribute("webuser", webUserService.getWebUserById(id));
+            model.addAttribute("webUser", webUserService.getWebUserById(id));
             return "webUser-update";
         }
         catch(Exception e){
@@ -60,7 +60,7 @@ public class Web_User_Controller {
                 return "redirect:/error";
         }
         else{
-            model.addAttribute("webuser", webUserService.getAllWebUsers());
+            model.addAttribute("webUser", webUserService.getAllWebUsers());
             return"webUser-update";
         }
     }

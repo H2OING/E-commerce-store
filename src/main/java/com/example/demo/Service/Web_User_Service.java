@@ -75,9 +75,8 @@ public class Web_User_Service implements UserDetailsService {
             existingWebUser.setRole(webUser.getRole());
             webUserRepository.save(existingWebUser);
             return true;
-        } else{
-            throw new EntityNotFoundException();
-        }
+        } 
+        return false;
     }
 
     public void deleteWebUser(Long id){

@@ -51,7 +51,7 @@ public class Web_User_Controller {
         }
     }
     @PostMapping("/admin/webuser/update/{id}")
-    public String postUpdateWebUser(@PathVariable(name = "id") Long id,@Valid Web_User webUser, BindingResult result){
+    public String postUpdateWebUser(@PathVariable(name = "id") Long id,@Valid Web_User webUser, BindingResult result, Model model){
         
         if(!result.hasErrors()){
             if(webUserService.updateWebUser(id, webUser))
@@ -60,7 +60,7 @@ public class Web_User_Controller {
                 return "redirect:/error";
         }
         else{
-            //model.addAttribute("webUser", webUserService.getAllWebUsers());
+            model.addAttribute("webUser", webUserService.getWebUserById(id));
             return"webUser-update";
         }
     }

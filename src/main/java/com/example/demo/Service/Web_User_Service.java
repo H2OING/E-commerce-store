@@ -7,6 +7,7 @@ import com.example.demo.Model.Web_User;
 import com.example.demo.Repository.Cart_Repository;
 import com.example.demo.Repository.Web_User_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,10 +40,12 @@ public class Web_User_Service implements UserDetailsService {
     private BCryptPasswordEncoder passwordEncoder;
 
     private static boolean isLoggedIn = false;
-
+/*
     public boolean isLoggedIn() {
         return isLoggedIn;
     }
+
+ */
 
     public void setLoggedIn(boolean loggedIn) {
         isLoggedIn = loggedIn;
@@ -64,6 +67,11 @@ public class Web_User_Service implements UserDetailsService {
     public Web_User getLoggedInWebUser(){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return webUserRepository.findByEmail(user.getUsername());
+    }
+
+    public Boolean isLoggedIn(){
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return null != authentication && !("anonymousUser").equals(authentication.getName());
     }
 
     public Web_User createWebUser(Web_User webUser){

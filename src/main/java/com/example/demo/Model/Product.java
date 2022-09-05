@@ -58,9 +58,9 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "IdCart"))
     private Collection<Cart> carts = new ArrayList<Cart>();
     
-    //public void addCarts (Cart cart) {
-    //	carts.add(cart);
-    //}
+    public void addCart (Cart cart) {
+    	carts.add(cart);
+    }
 
     @ManyToOne
     @JoinColumn(name = "idCat")
@@ -74,5 +74,9 @@ public class Product {
     	this.price = price;
     	this.picture = picture;
     	this.category = category;
+    }
+
+    public void removeCart(Cart cart) {
+        carts.remove(cart);
     }
 }

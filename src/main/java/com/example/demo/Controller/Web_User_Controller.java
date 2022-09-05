@@ -40,7 +40,7 @@ public class Web_User_Controller {
         return "redirect:/register?success";
     }
 
-    @GetMapping(value = "/admin/webuser/update/{id}")
+    @GetMapping("/admin/webuser/update/{id}")
     public String updateWebUser(@PathVariable(name = "id") Long id, Model model){
         try{
             model.addAttribute("webuser", webUserService.getWebUserById(id));
@@ -51,7 +51,7 @@ public class Web_User_Controller {
         }
     }
     @PostMapping("/admin/webuser/update/{id}")
-    public String postUpdateCourse(@PathVariable(name = "id") Long id,@Valid Web_User webUser, BindingResult result, Model model){
+    public String postUpdateWebUser(@PathVariable(name = "id") Long id,@Valid Web_User webUser, BindingResult result, Model model){
         
         if(!result.hasErrors()){
             if(webUserService.updateWebUser(id, webUser))

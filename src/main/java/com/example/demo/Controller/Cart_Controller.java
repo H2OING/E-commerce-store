@@ -8,7 +8,9 @@ import com.example.demo.Service.Cart_Service;
 import com.example.demo.Service.Product_Service;
 
 import java.util.List;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -57,10 +59,16 @@ public class Cart_Controller {
     }
     
     @PostMapping("/addToCart")
-    public String addToCart (HttpSession session, Model model, @RequestParam("id") Long id, @RequestParam("quantity") int quantity) {
-    	Web_User user = new Web_User();
-    	//user.getIdUser()
-    	//cartService.addToCart(user, id, false);
+    public String addToCart (HttpServletRequest req, Model model, @RequestParam("id") Long id, @RequestParam("quantity") int quantity) {
+    	String Stoken = (String) req.getSession(true).getAttribute("sessionToken");
+    	if(Stoken !=null) {  // reminder to think where to add session token
+    		Stoken = UUID.randomUUID().toString();
+    		req.getSession().setAttribute("sessionToken", Stoken);
+    		cartService.addToCart(id, Stoken, quantity, false);
+    	}else {
+    		// existing cart code
+    	}
+    	
     	return "PlaceHolder";
     }
     @GetMapping("/cart")

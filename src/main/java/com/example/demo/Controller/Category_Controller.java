@@ -3,6 +3,9 @@ package com.example.demo.Controller;
 import com.example.demo.Model.Category;
 import com.example.demo.Service.Category_Service;
 import com.example.demo.Service.Product_Service;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,13 +35,13 @@ public class Category_Controller {
     }
 
     @PostMapping(value = "/admin/createCategory")
-    public String createCategory(Category category){
+    public String createCategory(@Valid Category category){
         categoryService.createCategory(category);
         return "createCategory";
     }
 
     @PutMapping(value = "/admin/updateCategory/{id}")
-    public String updateCategory(@PathVariable(name = "id") Long id, Category category){
+    public String updateCategory(@PathVariable(name = "id") Long id, @Valid Category category){
         categoryService.updateCategory(id, category);
         return "updateCategory";
     }

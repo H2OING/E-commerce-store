@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 @Controller
 public class Product_Controller {
 
@@ -26,6 +28,7 @@ public class Product_Controller {
     @Autowired
     Category_Service categoryService;
 
+<<<<<<< HEAD
     @Autowired
     Cart_Service cartService;
 
@@ -33,6 +36,9 @@ public class Product_Controller {
     Web_User_Service webUserService;
 
     @GetMapping
+=======
+    @GetMapping(value = "/home")
+>>>>>>> efbdfeee81175f91e934c233105742180e5a512f
     public String getAllProducts(Model model){
 
         model.addAttribute("products", productService.getAllProducts());
@@ -60,13 +66,13 @@ public class Product_Controller {
     }
 
     @PostMapping(value = "/admin/createProduct")
-    public String createProduct(Product product){
+    public String createProduct(@Valid Product product){
         productService.createProduct(product);
         return "createProduct";
     }
 
     @PutMapping(value = "/admin/updateProduct/{id}")
-    public String updateProduct(@PathVariable(name = "id") Long id, Product product){
+    public String updateProduct(@PathVariable(name = "id") Long id,@Valid Product product){
         productService.updateProduct(id, product);
         return "updateProduct";
     }

@@ -1,11 +1,26 @@
 package com.example.demo;
 
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+
+
 import com.example.demo.Model.Category;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.example.demo.Model.Bill;
+import com.example.demo.Model.Cart;
+import com.example.demo.Model.Category;
+import com.example.demo.Model.Customer_Order;
+import com.example.demo.Model.Order_Status;
+import com.example.demo.Model.Payment_Method;
+import com.example.demo.Model.Product;
 import com.example.demo.Model.Role;
 import com.example.demo.Model.Web_User;
 import com.example.demo.Repository.Bill_Repository;
@@ -30,20 +45,18 @@ public class ECommerceStore1Application {
 			
 			@Override
 			public void run(String... args) throws Exception {
-				//Web_User user = new Web_User("Markuss","Karklins", "markuss@gmail.com", "2282828" ,"maja", "12345", Role.ROLE_ADMIN);
-				//user.setPasswordHashed(user.getPassword());
+				Web_User user = new Web_User("Maris","Ansbergs", "maris@gmail.com", "2282828" ,"maja", "Mqwertyuiiop1!", Role.ROLE_ADMIN);
+				user.setPasswordHashed(user.getPassword());
 				//WRepo.save(user);
-				//Customer customer = new Customer("Mike", "Tyson", "29857483", "Pumpkin Street",user );
-				//CuRepo.save(customer);
-				//Category category = new Category("Electronics", "Phone tech");
+				Category category = new Category("Electronics", "Phone tech");
 				//catRepo.save(category);
-				//Product prod = new Product("Samsung S22", "New, 5G", 1, new BigDecimal(450), null,category);
+				Product prod = new Product("Samsung S22", "New, 5G", 1, new BigDecimal(450), null,category);
 				//ProdRepo.save(prod);
-				//Cart cart = new Cart(new BigDecimal(450), false, customer, new ArrayList<>(Arrays.asList(prod)));
+				Cart cart = new Cart(new BigDecimal(450), false,user , new ArrayList<>(Arrays.asList(prod)));
 				//CRepo.save(cart);
-				//Customer_Order cOrder = new Customer_Order(Order_Status.NEW, new Date(), new Date(), cart);
+				Customer_Order cOrder = new Customer_Order(Order_Status.NEW, new Date(), new Date(), cart);
 				//CORepo.save(cOrder);
-				//Bill bill = new Bill(Payment_Method.BANK_TRANSFER, new Date(), 45567, cOrder);
+				Bill bill = new Bill(Payment_Method.BANK_TRANSFER, new Date(), 45567, cOrder);
 				//BRepo.save(bill);
 			}
 		};

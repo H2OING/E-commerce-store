@@ -42,11 +42,18 @@ public class Web_User {
     @Column(name = "address")
     @NotNull
     private String address;
+
+
+
     @Column(name = "email", unique = true)
     @Pattern (regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,10}$", message = "Invalid input for email")
+
     @Size(min=5, max=30)
     @NotNull
     private String email;
+    
+   // private String session;
+
     @Column(name = "password")
     //@Pattern (regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")
     //atleast 1 capital letter, 1 number and 1 speacial character (Password must be atleast 8 character)

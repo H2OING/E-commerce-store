@@ -19,6 +19,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+
+import javax.validation.constraints.NotNull;
+import java.util.Collection;
+import java.util.Collection;
+
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -70,20 +75,25 @@ public class Web_User_Service implements UserDetailsService {
     }
 
     public Web_User createWebUser(Web_User webUser){
-        webUser.setRole(Role.ROLE_CUSTOMER);
+        webUser.setRole(Role.ROLE_ADMIN);
         webUser.setPassword(passwordEncoder.encode(webUser.getPassword()));
         cartRepository.save(new Cart(BigDecimal.ZERO, true, webUser, new ArrayList<Product>()));
         return webUserRepository.save(webUser);
     }
 
-    public Web_User updateWebUser(Long id, Web_User webUser){
+    public boolean updateWebUser(Long id, Web_User webUser){
         Optional<Web_User> optionalWebUser = webUserRepository.findById(id);
         if(optionalWebUser.isPresent()){
             Web_User existingWebUser = optionalWebUser.get();
+            existingWebUser.setName(webUser.getName());
+            existingWebUser.setSurname(webUser.getSurname());
+            existingWebUser.setPhoneNumber(webUser.getPhoneNumber());
             existingWebUser.setEmail(webUser.getEmail());
+
             existingWebUser.setPassword(webUser.getPassword());
             existingWebUser.setRole(webUser.getRole());
-            return webUserRepository.save(existingWebUser);
+            webUserRepository.save(existingWebUser);
+            return true;
         } else{
             throw new EntityNotFoundException();
         }
@@ -98,6 +108,10 @@ public class Web_User_Service implements UserDetailsService {
         }
     }
 
+
+
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Web_User webUser = webUserRepository.findByEmail(username);
@@ -111,6 +125,7 @@ public class Web_User_Service implements UserDetailsService {
         return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
+
     public boolean getWebUserByEmailAndPassword(@NotNull String email, @NotNull String password) {
         if(webUserRepository.existsByEmail(email)){
             Web_User wUser = webUserRepository.findByEmail(email);
@@ -122,4 +137,5 @@ public class Web_User_Service implements UserDetailsService {
         }
         return false;
     }
+
 }

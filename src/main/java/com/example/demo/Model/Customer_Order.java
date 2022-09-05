@@ -20,7 +20,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-
+@NoArgsConstructor
 @Table(name = "Customer_Order")
 @Entity
 public class Customer_Order {

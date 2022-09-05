@@ -9,6 +9,7 @@ import com.example.demo.Repository.Web_User_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +18,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+
+import javax.validation.constraints.NotNull;
+import java.util.Collection;
+import java.util.Collection;
+
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -55,6 +61,11 @@ public class Web_User_Service implements UserDetailsService {
         }
     }
 
+    public Web_User getLoggedInWebUser(){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return webUserRepository.findByEmail(user.getUsername());
+    }
+
     public Web_User createWebUser(Web_User webUser){
         webUser.setRole(Role.ROLE_CUSTOMER);
         webUser.setPassword(passwordEncoder.encode(webUser.getPassword()));
@@ -88,6 +99,10 @@ public class Web_User_Service implements UserDetailsService {
         }
     }
 
+
+
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Web_User webUser = webUserRepository.findByEmail(username);
@@ -101,6 +116,7 @@ public class Web_User_Service implements UserDetailsService {
         return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
+
     public boolean getWebUserByEmailAndPassword(@NotNull String email, @NotNull String password) {
         if(webUserRepository.existsByEmail(email)){
             Web_User wUser = webUserRepository.findByEmail(email);
@@ -112,4 +128,5 @@ public class Web_User_Service implements UserDetailsService {
         }
         return false;
     }
+
 }

@@ -36,6 +36,7 @@ public class Web_User_Controller {
     @GetMapping(value = "/user/accountDetails")
     public String getLoggedInUserDetails(Model model){
         model.addAttribute("webUser", webUserService.getLoggedInWebUser());
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "accountDetails";
     }
 

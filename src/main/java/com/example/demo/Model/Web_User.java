@@ -51,6 +51,8 @@ public class Web_User {
     @Size(min=5, max=30)
     @NotNull
     private String email;
+    
+   // private String session;
 
     @Column(name = "password")
     //@Pattern (regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")

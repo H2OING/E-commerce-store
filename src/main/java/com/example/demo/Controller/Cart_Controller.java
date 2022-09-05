@@ -9,6 +9,7 @@ import com.example.demo.Service.Product_Service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,9 +56,9 @@ public class Cart_Controller {
         return "deleteCart";
     }
     
-    @PostMapping("/add")
-    public String addToCart (@Valid Cart cart, @Valid Product prod, long id) {
-    	//Web_User user = new Web_User();
+    @PostMapping("/addToCart")
+    public String addToCart (HttpSession session, Model model, @RequestParam("id") Long id, @RequestParam("quantity") int quantity) {
+    	Web_User user = new Web_User();
     	//user.getIdUser()
     	//cartService.addToCart(user, id, false);
     	return "PlaceHolder";

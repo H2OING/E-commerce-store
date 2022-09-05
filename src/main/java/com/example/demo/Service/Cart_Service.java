@@ -21,6 +21,8 @@ public class Cart_Service {
     Cart_Repository cartRepository;
     @Autowired
     Product_Repository prodRepo;
+    @Autowired
+    Product_Service prodService;
 
     public List<Cart> getAllCarts(){
         return cartRepository.findAll();
@@ -63,12 +65,18 @@ public class Cart_Service {
         }
     }
     
-    public void addToCart(Web_User user, long id,  boolean answer) { 
-    	//Dunno if this will work .perhaps need to add quantity in cart class
-    	Collection<Product> prod = (Collection<Product>) prodRepo.findById(id).get();
+    public void addToCart(Long id, String sessionToken, int quantity, boolean answer) { 
     	Cart cart = new Cart();
-    	cart.setProducts(prod);
+    	Product product = new Product();
+    	product.setQuantity(quantity);
+    	cart.setProducts((Collection<Product>) prodService.getProductById(id));
     	cart.setEmpty(answer);
+    	cart.getProducts().add(product);
+    	cart.setWebUser(null);  //need to think where to add session token, either in cart or web_user
+    	
+    	//Collection<Product> prod = (Collection<Product>) prodRepo.findById(id).get();
+    	
+    	
     	cartRepository.save(cart);
     }
 }

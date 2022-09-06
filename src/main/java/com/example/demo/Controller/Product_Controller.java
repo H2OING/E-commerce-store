@@ -30,7 +30,8 @@ public class Product_Controller {
     @Autowired
     Web_User_Service webUserService;
 
-    @GetMapping("/home")
+    //@GetMapping("/home")
+    @GetMapping
     public String getAllProducts(Model model){
 
         model.addAttribute("products", productService.getAllProducts());

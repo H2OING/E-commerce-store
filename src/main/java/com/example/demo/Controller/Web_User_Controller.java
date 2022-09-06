@@ -81,11 +81,7 @@ public class Web_User_Controller {
     }
 
 
-    @PutMapping(value = "PlaceholderMapping10")
-    public String updateWebUser(@PathVariable(name = "id") Long id, @Valid Web_User webUser){
-        webUserService.updateWebUser(id, webUser);
-        return "updateWebUser";
-    }
+    
 
     @GetMapping("/admin/webuser/update/{id}")
     public String updateWebUser(@PathVariable(name = "id") Long id, Model model){

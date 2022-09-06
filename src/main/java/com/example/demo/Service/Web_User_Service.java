@@ -89,9 +89,6 @@ public class Web_User_Service implements UserDetailsService {
             existingWebUser.setSurname(webUser.getSurname());
             existingWebUser.setPhoneNumber(webUser.getPhoneNumber());
             existingWebUser.setEmail(webUser.getEmail());
-
-            existingWebUser.setPassword(webUser.getPassword());
-            existingWebUser.setRole(webUser.getRole());
             webUserRepository.save(existingWebUser);
             return true;
         } 

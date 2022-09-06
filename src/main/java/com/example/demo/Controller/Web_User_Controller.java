@@ -70,7 +70,6 @@ public class Web_User_Controller {
         } catch (Exception e){
             return "redirect:/register?error";
         }
-
     }
 
     @PutMapping(value = "PlaceholderMapping10")
@@ -103,7 +102,6 @@ public class Web_User_Controller {
             model.addAttribute("webUser", webUserService.getWebUserById(id));
             return"webUser-update";
         }
-
     }
 
     @RequestMapping(value = "/admin/webuser/delete/{id}", method = {RequestMethod.DELETE, RequestMethod.GET})

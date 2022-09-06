@@ -33,16 +33,18 @@ public class Cart {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "IdUser")
     private Web_User webUser;
-    @OneToOne(mappedBy = "cart")
-    private Customer_Order order;
+
+    @OneToMany(mappedBy = "cart")
+    @ToString.Exclude
+    private Collection<Customer_Order> orders = new ArrayList<Customer_Order>();
     
     @ManyToMany(mappedBy = "carts")
     private Collection<Product> products = new ArrayList<Product>();
-    
+
     public void addProduct(Product product) {
     	products.add(product);
     }
-    
+
     public Cart (BigDecimal total, boolean isEmpty,Web_User webUser,Collection<Product> products) {
     	this.total = total;
     	this.isEmpty = isEmpty;

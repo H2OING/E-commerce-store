@@ -15,7 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Getter
 @Setter
-@ToString
+//@ToString
 @RequiredArgsConstructor
 @Table(name = "Web_User")
 @Entity

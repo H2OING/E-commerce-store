@@ -45,18 +45,18 @@ public class ECommerceStore1Application {
 			
 			@Override
 			public void run(String... args) throws Exception {
-				Web_User user = new Web_User("Maris","Ansbergs", "maris@gmail.com", "2282828" ,"maja", "Mqwertyuiiop1!", Role.ROLE_ADMIN);
-				user.setPasswordHashed(user.getPassword());
+				//Web_User user = new Web_User("Maris","Ansbergs", "maris@gmail.com", "2282828" ,"maja", "Mqwertyuiiop1!", Role.ROLE_ADMIN);
+				//user.setPasswordHashed(user.getPassword());
 				//WRepo.save(user);
-				Category category = new Category("Electronics", "Phone tech");
+				//Category category = new Category("Electronics", "Phone tech");
 				//catRepo.save(category);
-				Product prod = new Product("Samsung S22", "New, 5G", 1, new BigDecimal(450), null,category);
+				//Product prod = new Product("Samsung S22", "New, 5G", 1, new BigDecimal(450), null,category);
 				//ProdRepo.save(prod);
-				Cart cart = new Cart(new BigDecimal(450), false,user , new ArrayList<>(Arrays.asList(prod)));
+				//Cart cart = new Cart(new BigDecimal(450), false,user , new ArrayList<>(Arrays.asList(prod)));
 				//CRepo.save(cart);
-				Customer_Order cOrder = new Customer_Order(Order_Status.NEW, new Date(), new Date(), cart);
+				//Customer_Order cOrder = new Customer_Order(Order_Status.NEW, new Date(), new Date(), cart);
 				//CORepo.save(cOrder);
-				Bill bill = new Bill(Payment_Method.BANK_TRANSFER, new Date(), 45567, cOrder);
+				//Bill bill = new Bill(Payment_Method.BANK_TRANSFER, new Date(), 45567, cOrder);
 				//BRepo.save(bill);
 			}
 		};

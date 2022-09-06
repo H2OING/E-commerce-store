@@ -43,7 +43,7 @@ public class Web_User_Controller {
     public String getLoggedInUserDetails(Model model){
         model.addAttribute("webUser", webUserService.getLoggedInWebUser());
         model.addAttribute("categories", categoryService.getAllCategories());
-        if(webUserService.isLoggedIn()){
+        if(webUserService.isLoggedIn() && webUserService.isCustomer()){
             Collection<Product> products = webUserService.getLoggedInWebUser().getCart().getProducts();
             model.addAttribute("cartProducts", products);
         }
@@ -59,13 +59,6 @@ public class Web_User_Controller {
     }
 
     @PostMapping(value = "/register")
-
-    public String createWebUser(@ModelAttribute("webUser") Web_User webUser){
-
-        webUserService.createWebUser(webUser);
-        return "redirect:/register?success";
-    }
-
     public String createWebUser(@ModelAttribute("webUser") @Valid Web_User webUser, BindingResult result){
         try {
             if (result.hasErrors()) {
@@ -80,8 +73,11 @@ public class Web_User_Controller {
 
     }
 
-
-    
+    @PutMapping(value = "PlaceholderMapping10")
+    public String updateWebUser(@PathVariable(name = "id") Long id, @Valid Web_User webUser){
+        webUserService.updateWebUser(id, webUser);
+        return "updateWebUser";
+    }
 
     @GetMapping("/admin/webuser/update/{id}")
     public String updateWebUser(@PathVariable(name = "id") Long id, Model model){
@@ -98,7 +94,8 @@ public class Web_User_Controller {
         
         if(!result.hasErrors()){
             if(webUserService.updateWebUser(id, webUser))
-                return "redirect:/admin/webuser/" + id;
+                //return "redirect:/admin/webuser/" + id;
+                return "redirect:/admin/webuser";
             else
                 return "redirect:/error";
         }
@@ -109,12 +106,11 @@ public class Web_User_Controller {
 
     }
 
-
-    @GetMapping(value = "/admin/webuser/delete/{id}")
+    @RequestMapping(value = "/admin/webuser/delete/{id}", method = {RequestMethod.DELETE, RequestMethod.GET})
     public String deleteWebUser(@PathVariable(name = "id") Long id, Model model){
         if(webUserService.deleteWebUser(id)){
-            model.addAttribute("webUser", webUserService.getAllWebUsers());
-            return "webUser-show-all";
+            //model.addAttribute("webUser", webUserService.getAllWebUsers());
+            return "redirect:/admin/webuser";
         }
         return "redirect:/error";
     }

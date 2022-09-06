@@ -73,6 +73,13 @@ public class Web_User_Service implements UserDetailsService {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return null != authentication && !("anonymousUser").equals(authentication.getName());
     }
+    public Boolean isCustomer(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CUSTOMER"))) {
+            return true;
+        }
+        return false;
+    }
 
     public Web_User createWebUser(Web_User webUser){
         webUser.setRole(Role.ROLE_CUSTOMER);
@@ -103,10 +110,6 @@ public class Web_User_Service implements UserDetailsService {
 		}
 			return false;		
 	}
-
-
-
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

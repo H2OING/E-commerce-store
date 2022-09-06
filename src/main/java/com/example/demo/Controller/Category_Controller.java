@@ -28,7 +28,7 @@ public class Category_Controller {
     @GetMapping("/categories")
     public String getAllCategories(Model model){
         model.addAttribute("categories", categoryService.getAllCategories());
-        if(webUserService.isLoggedIn()){
+        if(webUserService.isLoggedIn() && webUserService.isCustomer()){
             Collection<Product> products = webUserService.getLoggedInWebUser().getCart().getProducts();
             model.addAttribute("cartProducts", products);
         }

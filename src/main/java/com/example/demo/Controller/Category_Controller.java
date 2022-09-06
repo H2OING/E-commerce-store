@@ -1,15 +1,19 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Model.Category;
+import com.example.demo.Model.Product;
 import com.example.demo.Service.Category_Service;
 import com.example.demo.Service.Product_Service;
 
 import javax.validation.Valid;
 
+import com.example.demo.Service.Web_User_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 @Controller
 public class Category_Controller {
@@ -18,10 +22,16 @@ public class Category_Controller {
     Category_Service categoryService;
     @Autowired
     Product_Service productService;
+    @Autowired
+    Web_User_Service webUserService;
 
     @GetMapping("/categories")
     public String getAllCategories(Model model){
         model.addAttribute("categories", categoryService.getAllCategories());
+        if(webUserService.isLoggedIn()){
+            Collection<Product> products = webUserService.getLoggedInWebUser().getCart().getProducts();
+            model.addAttribute("cartProducts", products);
+        }
         return "categories";
     }
 

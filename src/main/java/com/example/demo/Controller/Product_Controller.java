@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Model.Product;
+import com.example.demo.Service.Cart_Service;
 import com.example.demo.Service.Category_Service;
 import com.example.demo.Service.Product_Service;
 import com.example.demo.Service.Web_User_Service;
@@ -14,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.validation.Valid;
 
@@ -24,11 +27,18 @@ public class Product_Controller {
     Product_Service productService;
     @Autowired
     Category_Service categoryService;
+    @Autowired
+    Web_User_Service webUserService;
 
-    @GetMapping//(value = "/home")
+    @GetMapping("/home")
     public String getAllProducts(Model model){
+
         model.addAttribute("products", productService.getAllProducts());
         model.addAttribute("categories", categoryService.getAllCategories());
+        if(webUserService.isLoggedIn()){
+            Collection<Product> products = webUserService.getLoggedInWebUser().getCart().getProducts();
+            model.addAttribute("cartProducts", products);
+        }
         return "home";
     }
 
@@ -36,6 +46,10 @@ public class Product_Controller {
     public String getProduct(@PathVariable(name = "id") Long id, Model model){
         model.addAttribute("product", productService.getProductById(id));
         model.addAttribute("categories", categoryService.getAllCategories());
+        if(webUserService.isLoggedIn()){
+            Collection<Product> products = webUserService.getLoggedInWebUser().getCart().getProducts();
+            model.addAttribute("cartProducts", products);
+        }
         return "product";
     }
 

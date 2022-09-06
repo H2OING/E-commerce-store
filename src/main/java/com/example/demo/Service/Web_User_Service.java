@@ -98,14 +98,14 @@ public class Web_User_Service implements UserDetailsService {
         return false;
     }
 
-    public void deleteWebUser(Long id){
+    public boolean deleteWebUser(Long id){
         Optional<Web_User> optionalWebUser= webUserRepository.findById(id);
         if(optionalWebUser.isPresent()){
-            webUserRepository.deleteById(id);
-        } else{
-            throw new EntityNotFoundException();
-        }
-    }
+			webUserRepository.deleteById(id);
+			return true;
+		}
+			return false;		
+	}
 
 
 

@@ -114,9 +114,12 @@ public class Web_User_Controller {
     }
 
 
-    @RequestMapping(value = "/admin/webuser/delete/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})
-    public String deleteWebUser(@PathVariable(name = "id") Long id){
-        webUserService.deleteWebUser(id);
-        return "redirect:/admin/webuser";
+    @GetMapping(value = "/admin/webuser/delete/{id}")
+    public String deleteWebUser(@PathVariable(name = "id") Long id, Model model){
+        if(webUserService.deleteWebUser(id)){
+            model.addAttribute("webUser", webUserService.getAllWebUsers());
+            return "webUser-show-all";
+        }
+        return "redirect:/error";
     }
 }

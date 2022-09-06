@@ -75,7 +75,7 @@ public class Web_User_Service implements UserDetailsService {
     }
 
     public Web_User createWebUser(Web_User webUser){
-        webUser.setRole(Role.ROLE_ADMIN);
+        webUser.setRole(Role.ROLE_CUSTOMER);
         webUser.setPassword(passwordEncoder.encode(webUser.getPassword()));
         cartRepository.save(new Cart(BigDecimal.ZERO, true, webUser, new ArrayList<Product>()));
         return webUserRepository.save(webUser);
@@ -89,24 +89,20 @@ public class Web_User_Service implements UserDetailsService {
             existingWebUser.setSurname(webUser.getSurname());
             existingWebUser.setPhoneNumber(webUser.getPhoneNumber());
             existingWebUser.setEmail(webUser.getEmail());
-
-            existingWebUser.setPassword(webUser.getPassword());
-            existingWebUser.setRole(webUser.getRole());
             webUserRepository.save(existingWebUser);
             return true;
-        } else{
-            throw new EntityNotFoundException();
-        }
+        } 
+        return false;
     }
 
-    public void deleteWebUser(Long id){
+    public boolean deleteWebUser(Long id){
         Optional<Web_User> optionalWebUser= webUserRepository.findById(id);
         if(optionalWebUser.isPresent()){
-            webUserRepository.deleteById(id);
-        } else{
-            throw new EntityNotFoundException();
-        }
-    }
+			webUserRepository.deleteById(id);
+			return true;
+		}
+			return false;		
+	}
 
 
 

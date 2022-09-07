@@ -29,6 +29,7 @@ public class Bill {
     @Column(name = "payment_date")
     @NotNull
     private Date paymentDate;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "invoice_number")
     private long invoiceNumber;
    

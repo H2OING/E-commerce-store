@@ -27,14 +27,9 @@ public class Product_Controller {
     Product_Service productService;
     @Autowired
     Category_Service categoryService;
-<<<<<<< HEAD
-=======
-
 
     @Autowired
     Cart_Service cartService;
-
->>>>>>> afdbbcef5f78cf9eb58d1d54be74647e7eb17eea
     @Autowired
     Web_User_Service webUserService;
 

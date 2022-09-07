@@ -29,18 +29,20 @@ public class Category_Service {
         }
     }
 
-    public Category createCategory(Category category){
-        return categoryRepository.save(category);
+    public boolean createCategory(Category category){
+        categoryRepository.save(category);
+        return true;
     }
 
-    public Category updateCategory(Long id, Category category){
+    public boolean updateCategory(Long id, Category category){
         Optional<Category> optionalCategory = categoryRepository.findById(id);
         if(optionalCategory.isPresent()){
             Category existingCategory = optionalCategory.get();
             existingCategory.setName(category.getName());
             existingCategory.setDescription(category.getDescription());
             existingCategory.setProducts(category.getProducts());
-            return categoryRepository.save(existingCategory);
+            categoryRepository.save(existingCategory);
+            return true;
         } else{
             throw new EntityNotFoundException();
         }

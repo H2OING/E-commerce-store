@@ -11,7 +11,9 @@ import com.example.demo.Service.Web_User_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collection;
 
@@ -44,21 +46,74 @@ public class Category_Controller {
         return "category";
     }
 
-    @PostMapping(value = "/admin/createCategory")
-    public String createCategory(@Valid Category category){
-        categoryService.createCategory(category);
-        return "createCategory";
+    @GetMapping (value = "/admin/categories")
+    public String adminGetCategories(Model model)
+    {
+        model.addAttribute("object", categoryService.getAllCategories());
+		return "category-show-all";
     }
 
-    @PutMapping(value = "/admin/updateCategory/{id}")
+    @GetMapping ("/admin/category/add")
+public String getAddCategory (Category category){
+	return "category-create";
+}
+
+
+@PostMapping ("/admin/category/add")
+public String postAddCategory (@Valid Category category, BindingResult result)
+{
+	if (!result.hasErrors()) {
+		if(categoryService.createCategory(category))
+		return "redirect:/admin/categories";
+		else 
+			return "redirect:/error";
+	}
+	else {
+		return"category-create";
+	}
+}
+
+	
+
+    /*
+    @PutMapping(value = "/admin/category/update/{id}")
     public String updateCategory(@PathVariable(name = "id") Long id, @Valid Category category){
         categoryService.updateCategory(id, category);
         return "updateCategory";
     }
+    */
 
-    @RequestMapping(value = "/admin/deleteCategory/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})
+    @GetMapping("/admin/category/update/{id}")
+    public String updatecategory(@PathVariable(name = "id") Long id, Model model){
+        try{
+            model.addAttribute("category", categoryService.getCategoryById(id));
+            return "category-update";
+        }
+        catch(Exception e){
+            return "error";
+        }
+    }
+    @PostMapping("/admin/category/update/{id}")
+    public String postUpdatecategory(@PathVariable(name = "id") Long id,@Valid Category category, BindingResult result, Model model, RedirectAttributes redirAttrs){
+        
+        if(!result.hasErrors()){
+            if(categoryService.updateCategory(id, category)){
+                //return "redirect:/admin/category/" + id;
+                redirAttrs.addFlashAttribute("success", "Category updated!");
+                return "redirect:/admin/categories";}
+            else{
+                return "redirect:/error";}
+        }
+        else{
+            model.addAttribute("category", categoryService.getCategoryById(id));
+            return"category-update";
+        }
+
+    }
+
+    @RequestMapping(value = "/admin/category/delete/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})
     public String deleteCategory(@PathVariable(name = "id") Long id){
         categoryService.deleteCategory(id);
-        return "deleteCategory";
+        return "redirect:/admin/categories";
     }
 }

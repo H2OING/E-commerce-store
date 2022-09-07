@@ -48,8 +48,18 @@ public class ECommerceStore1Application {
 				//Web_User user = new Web_User("Maris","Ansbergs", "maris@gmail.com", "2282828" ,"maja", "Mqwertyuiiop1!", Role.ROLE_ADMIN);
 				//user.setPasswordHashed(user.getPassword());
 				//WRepo.save(user);
-				//Category category = new Category("Electronics", "Phone tech");
-				//catRepo.save(category);
+				/* 
+				Category category = new Category("Electronics", "Phone tech");
+				catRepo.save(category);
+				Category category1 = new Category("Clothing", "Shoes, pants, shirts etc.");
+				catRepo.save(category1);
+				Category category2 = new Category("Sport", "Products for sport activities");
+				catRepo.save(category2);
+				Category category3 = new Category("Kids", "Toys, food etc.");
+				catRepo.save(category3);
+				Category category4 = new Category("Zoo products", "For animals");
+				catRepo.save(category4);
+				*/
 				//Product prod = new Product("Samsung S22", "New, 5G", 1, new BigDecimal(450), null,category);
 				//ProdRepo.save(prod);
 				//Cart cart = new Cart(new BigDecimal(450), false,user , new ArrayList<>(Arrays.asList(prod)));

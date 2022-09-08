@@ -32,11 +32,37 @@ $( document ).ready(function() {
     $("#email").prop('disabled', false); //enable
   });
 });
-
+    </script>
+    <script>
+        function checkRadioInputs(){
+            if($('#creditCard').is(':checked')){
+                $("#number").prop('disabled', false); //enable
+                $("#ownerName").prop('disabled', false); //enable
+                $("#date").prop('disabled', false); //enable
+                $("#cvvCode").prop('disabled', false); //enable
+                $("#email").prop('disabled', true); //disable
+            }
+            if($('#paypal').is(':checked')){
+                $("#number").prop('disabled', true); //disable
+                $("#ownerName").prop('disabled', true); //disable
+                $("#date").prop('disabled', true); //disable
+                $("#cvvCode").prop('disabled', true); //disable
+                $("#email").prop('disabled', false); //enable
+            }
+        }
+    </script>
+    <script>
+        function collapseAccordion(){
+            if($('#creditCard').is(':checked')){
+            }
+            if($('#paypal').is(':checked')){
+                $('#accordionPayment').collapse('hide');
+            }
+        }
     </script>
     <link rel="stylesheet" th:href="@{/css/checkout.css}"/>
 </head>
-<body>
+<body th:onload="checkRadioInputs()">
 <div class="container">
     <form th:action="@{/user/checkout}" method="post">
         <h1 class="h3 mb-5">Payment</h1>
@@ -47,7 +73,7 @@ $( document ).ready(function() {
                     <!-- Credit card -->
                     <div class="accordion-item mb-3">
                         <h2 class="h5 px-4 py-3 accordion-header d-flex justify-content-between align-items-center">
-                            <div class="form-check w-100 collapsed" aria-expanded="false">
+                            <div class="form-check w-100" aria-expanded="false" id="creditCardAccordion">
                                 <input data-bs-toggle="collapse"
                                        data-bs-target="#collapseCC" class="form-check-input credit-card" type="radio"
                                        id="creditCard" th:name="flag"

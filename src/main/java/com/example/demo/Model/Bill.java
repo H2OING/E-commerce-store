@@ -23,12 +23,13 @@ public class Bill {
     @Column(name="IdBi")
     @Setter(value = AccessLevel.NONE)
     private long idBi;
-    @NotNull
+    //@NotNull
     @Column(name = "payment_method")
     private Payment_Method paymentMethod;
     @Column(name = "payment_date")
     @NotNull
     private Date paymentDate;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "invoice_number")
     private long invoiceNumber;
    

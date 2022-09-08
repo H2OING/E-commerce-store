@@ -37,10 +37,17 @@ public class Customer_Order {
     @Column(name = "shipped_date")
     @DateTimeFormat(iso = ISO.DATE_TIME)
     private Date shippedDate;
+    /*
     @OneToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "idCart")
     @Cascade(CascadeType.ALL)
     private Cart cart;
+     */
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    @Cascade(CascadeType.ALL)
+    private Cart cart;
+
     @OneToOne(mappedBy = "order")
     private Bill bill;
     

@@ -27,6 +27,9 @@ public class Product_Controller {
     Product_Service productService;
     @Autowired
     Category_Service categoryService;
+
+    @Autowired
+    Cart_Service cartService;
     @Autowired
     Web_User_Service webUserService;
 

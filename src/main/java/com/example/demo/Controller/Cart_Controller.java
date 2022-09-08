@@ -56,7 +56,7 @@ public class Cart_Controller {
 
     @PostMapping(value = "/user/addToCart")
     public String addToCart(@RequestParam("id") Long productId, @RequestParam("quantity") int quantity, @RequestParam("path") String path){
-        cartService.addToCart(productId, quantity, webUserService.getLoggedInWebUser());
+        cartService.addToCart(productId, webUserService.getLoggedInWebUser());
         return "redirect:"+path;
     }
 

@@ -62,6 +62,15 @@ public class Product {
     	carts.add(cart);
     }
 
+    public void clearCarts(Long idP){
+        for (Cart cart:
+             carts) {
+            if(cart.getIdCart() == idP){
+                carts.remove(cart);
+            }
+        }
+    }
+
     @ManyToOne
     @JoinColumn(name = "idCat")
     private Category category;

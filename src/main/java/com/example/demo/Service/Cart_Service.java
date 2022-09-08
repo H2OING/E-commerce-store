@@ -45,7 +45,7 @@ public class Cart_Service {
             existingCart.setTotal(cart.getTotal());
             existingCart.setEmpty(cart.isEmpty());
             existingCart.setWebUser(cart.getWebUser());
-            existingCart.setOrder(cart.getOrder());
+            existingCart.setOrders(cart.getOrders());
             existingCart.setProducts(cart.getProducts());
             return cartRepository.save(existingCart);
         } else{
@@ -62,10 +62,11 @@ public class Cart_Service {
         }
     }
 
-    public void addToCart(Long productId, int quantity, Web_User loggedInUser) {
+    public void addToCart(Long productId, Web_User loggedInUser) {
         Product product = productRepository.findById(productId).get();
         Cart cart = loggedInUser.getCart();
         cart.addProduct(product);
+        cart.setTotal(product.getPrice().add(cart.getTotal()));
         product.addCart(cart);
         cartRepository.save(cart);
         productRepository.save(product);
@@ -75,6 +76,7 @@ public class Cart_Service {
         Product product = productRepository.findById(productId).get();
         Cart cart = loggedInUser.getCart();
         cart.removeProduct(product);
+        cart.setTotal(cart.getTotal().subtract(product.getPrice()));
         product.removeCart(cart);
         cartRepository.save(cart);
         productRepository.save(product);

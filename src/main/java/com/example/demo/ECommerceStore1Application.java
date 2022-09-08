@@ -57,10 +57,11 @@ public class ECommerceStore1Application {
 				catRepo.save(category2);
 				Category category3 = new Category("Kids", "Toys, food etc.");
 				catRepo.save(category3);
-				Category category4 = new Category("Zoo products", "For animals");
-				catRepo.save(category4);
 				*/
-				//Product prod = new Product("Samsung S22", "New, 5G", 1, new BigDecimal(450), null,category);
+				//Category category4 = new Category("Phone", "phone");
+				//catRepo.save(category4);
+				
+				//Product prod = new Product("Samsung S22", "New, 5G", 1, new BigDecimal(450), null, category4);
 				//ProdRepo.save(prod);
 				//Cart cart = new Cart(new BigDecimal(450), false,user , new ArrayList<>(Arrays.asList(prod)));
 				//CRepo.save(cart);

@@ -64,7 +64,6 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "idCat")
-    @Cascade(CascadeType.ALL)
     private Category category;
     
     public Product (String name,String description,int quantity,BigDecimal price,byte[] picture,Category category) {

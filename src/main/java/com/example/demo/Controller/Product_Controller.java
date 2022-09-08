@@ -43,6 +43,12 @@ public class Product_Controller {
         return "home";
     }
 
+    @GetMapping("/admin/products")
+    public String selectAllProductsAdmin(Model model){
+        model.addAttribute("object", productService.getAllProducts());
+        return "product-show-all";
+    }
+
     @GetMapping(value = "/product/{id}")
     public String getProduct(@PathVariable(name = "id") Long id, Model model){
         model.addAttribute("product", productService.getProductById(id));

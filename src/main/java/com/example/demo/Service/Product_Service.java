@@ -34,8 +34,9 @@ public class Product_Service {
         }
     }
 
-    public Product createProduct(Product product){
-        return productRepository.save(product);
+    public boolean createProduct(Product product){
+        productRepository.save(product);
+        return true;
     }
 
     public Product updateProduct(Long id, Product product){

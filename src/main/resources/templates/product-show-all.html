@@ -31,7 +31,7 @@
                 </div>
             </nav>
             <div class="container">
-            <a th:href="@{/admin/category/add}" class="btn-sm btn-success text-white" role="button">Add category</a>
+            <a th:href="@{/admin/product/add}" class="btn-sm btn-success text-white" role="button">Add product</a>
             <div th:if="${ not#lists.isEmpty(object)}" class="pt-3">
             <table class="table table-bordered table-striped">
                 <tr>
@@ -50,7 +50,9 @@
                 <td th:text="${temp.getDescription()}"/>
                 <td th:text="${temp.getQuantity()}"/>
                 <td th:text="${temp.getPrice()}"/>
-                <td th:text="${temp.getPicture()}"/>
+                <td>
+                    <img class = "img-fluid"  th:src="@{'/image/' + ${temp.idP}}" alt="" />   
+                </td>
                 <td th:text="${temp.getCategory().getName()}"/>
 
                 <td class="col-md-4">

@@ -28,6 +28,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.annotation.Rollback;
 
 import com.example.demo.Model.Category;
 import com.example.demo.Model.Product;
@@ -83,5 +84,21 @@ public class ProductServiceTest {
 		when(productRepository.findById(product.getIdP())).thenReturn(Optional.of(product));
 		productService.deleteProduct(product.getIdP());
 		verify(productRepository,times(1)).deleteById(product.getIdP());
+	}
+	
+	@Test
+	@Rollback(value = false)
+	@DisplayName("Test should pass when a product is updated")
+	void updateProduct() {
+		Category category = new Category("Electronics", "Phone tech");
+		Product product = new Product("Camera", "New", 4, new BigDecimal(270), null, category);
+		//product.setName("Fridge");
+		productRepository.save(product);
+		product.setName("Fridge");
+		productService.updateProduct(product.getIdP(), product);
+		Product updatedProduct = productRepository.findById(product.getIdP()).get();
+		//System.out.println(productR);
+		assertThat(updatedProduct.getName()).isEqualTo("Fridge");
+		//assertEquals("Fridge",updatedProduct.getName());
 	}
 }

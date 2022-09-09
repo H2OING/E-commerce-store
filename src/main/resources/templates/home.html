@@ -11,9 +11,8 @@
   <link rel="stylesheet" th:href="@{/css/product.css}"/>
   <link rel="stylesheet" th:href="@{/css/cart.css}"/>
 </head>
-<body>
-
-<nav class="navbar navbar-expand-lg bg-light">
+<body style="background:url(https://www.onlygfx.com/wp-content/uploads/2021/04/white-triangle-pattern-seamless-background-1.jpg);">
+<nav class="navbar navbar-expand-lg bg-light pad w">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -36,7 +35,6 @@
           </ul>
         </li>
       </ul>
-
 
       <ul class="navbar-nav ms-auto">
         <li class="nav-item dropdown"  sec:authorize="hasRole('CUSTOMER')">
@@ -83,10 +81,6 @@
   </div>
 </nav>
 
-<p th:each="authority : ${#authentication.getAuthorities()}"
-   th:text="${authority.getAuthority()}">
-</p>
-
 <section class="section-products">
   <div class="container">
     <div class="row justify-content-center text-center">
@@ -99,7 +93,7 @@
     <div class="row">
       <!-- Single Product -->
       <div class="col-md-6 col-lg-4 col-xl-3" th:each="product: ${products}">
-        <div id="product-2" class="single-product" th:style="'background:url(' + @{'/image/' + ${product.idP}} + ') no-repeat center; background-size: contain;'">
+        <div id="div2" class="single-product zoom" th:style="'background:url(' + @{'/image/' + ${product.idP}} + ') no-repeat center; background-size: contain;'">
           <a th:href="@{'/product/' + ${product.idP}}">
             <div class="part-1">
             </div>

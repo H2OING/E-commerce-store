@@ -13,11 +13,12 @@
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<link rel="stylesheet" th:href="@{/css/product.css}"/>
 </head>
 
 
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container">
+<div class="container pad w">
 	<table id="cart" class="table table-hover table-condensed">
     				<thead>
 						<tr>
@@ -57,7 +58,7 @@
 							<td class="text-center" th:text="${cart.total + '€'}" ><strong></strong></td>
 						</tr>
 						<tr>
-							<td><a href="/home" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+							<td><a href="/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
 							<td colspan="2" class="hidden-xs"></td>
 							<td class="hidden-xs text-center" th:text="${cart.total + '€'}" ><strong></strong></td>
 							<td th:if="${not #lists.isEmpty(cart.getProducts())}">

@@ -47,7 +47,7 @@ public class Product {
     @Min(value = 1)
     @Max(value = 5000)
     private BigDecimal price;
-    @Column(name = "picture", columnDefinition = "blob")
+    @Column(name = "picture", columnDefinition = "longblob")
     private byte[] picture;
     
     @ManyToMany

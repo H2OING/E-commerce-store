@@ -63,30 +63,26 @@
                                     <div class="form-group">
                                         <label for="category">Category</label>
                                         <select class="form-control" id="category" th:field="*{category}">
-                                            <option th:each="test: ${category}"
-                                            th:value="${test.idCat}" th:text="${test.name}">
-                                        </option>
+                                            <option th:each="cat : ${listCategory}" th:text="${cat.name}" th:value="${cat.idCat}"/>
                                         </select>
                                     </div>
 
-                                    <div class="container">
+                                    
                                         <div class="row">
                                             <div class="col-md-8 mx-auto">
-                                                <h2>Upload Image Example</h2>
+                                                <label for="price">Image</label>
                                                 <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
                                                 <form method="post" th:action="@{/upload}" enctype="multipart/form-data">
                                                     <div class="form-group">
                                                         <input type="file" name="image" accept="image/*" class="form-control-file">
                                                     </div>
-                                                    <button type="submit" class="btn btn-primary">Upload image</button>
+                                                    <button type="submit" class="btn btn-primary">Save Product</button>
                                                 </form>
                                                 <span th:if="${msg != null}" th:text="${msg}"></span>
                                             </div>
                                         </div>
-                                    </div>
-                                
-        
-                            <button type="submit" class="btn btn-primary btn-block mt-2">Saglabāt</button>
+                                        
+                        
                         </form>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Model.Category;
 import com.example.demo.Model.Product;
 import com.example.demo.Service.Cart_Service;
 import com.example.demo.Service.Category_Service;
@@ -73,13 +74,17 @@ public class Product_Controller {
     }
 
     @GetMapping ("/admin/product/add")
-    public String getAddCategory (Product product){
+    public String getAddProduct (Model model){
+        Collection<Category> listCategory = categoryService.getAllCategories(); 
+        
+        model.addAttribute("product", new Product());
+        model.addAttribute("listCategory", listCategory);
         return "product-create";
     }
 
 
     @PostMapping ("/admin/product/add")
-    public String postAddCategory (@Valid Product product, BindingResult result)
+    public String postAddProduct (@Valid Product product, BindingResult result)
     {
         if (!result.hasErrors()) {
             if(productService.createProduct(product))
@@ -98,10 +103,10 @@ public class Product_Controller {
         return "updateProduct";
     }
 
-    @RequestMapping(value = "/admin/deleteProduct/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})
+    @RequestMapping(value = "/admin/product/delete/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})
     public String deleteProduct(@PathVariable(name = "id") Long id){
         productService.deleteProduct(id);
-        return "deleteProduct";
+        return "redirect:/admin/product";
     }
 
 }

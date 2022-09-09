@@ -34,9 +34,32 @@ $( document ).ready(function() {
 });
 
     </script>
+    <script>
+        function checkRadioInputs(){
+            if($('#creditCard').is(':checked')){
+                $("#number").prop('disabled', false); //enable
+                $("#ownerName").prop('disabled', false); //enable
+                $("#date").prop('disabled', false); //enable
+                $("#cvvCode").prop('disabled', false); //enable
+                $("#email").prop('disabled', true); //disable
+                $("#collapseCC").collapse("show");
+                $("#collapsePP").collapse("hide");
+            }
+            if($('#paypal').is(':checked')){
+                $("#number").prop('disabled', true); //disable
+                $("#ownerName").prop('disabled', true); //disable
+                $("#date").prop('disabled', true); //disable
+                $("#cvvCode").prop('disabled', true); //disable
+                $("#email").prop('disabled', false); //enable
+                $("#collapseCC").collapse("hide");
+                $("#collapsePP").collapse("show");
+            }
+        }
+
+    </script>
     <link rel="stylesheet" th:href="@{/css/checkout.css}"/>
 </head>
-<body>
+<body th:onload="checkRadioInputs()">
 <div class="container">
     <form th:action="@{/user/checkout}" method="post">
         <h1 class="h3 mb-5">Payment</h1>
@@ -45,7 +68,7 @@ $( document ).ready(function() {
             <div class="col-lg-9">
                 <div class="accordion" id="accordionPayment">
                     <!-- Credit card -->
-                    <div class="accordion-item mb-3">
+                    <div class="accordion-item mb-3" id="creditCardAccordion">
                         <h2 class="h5 px-4 py-3 accordion-header d-flex justify-content-between align-items-center">
                             <div class="form-check w-100 collapsed" aria-expanded="false">
                                 <input data-bs-toggle="collapse"
@@ -65,7 +88,7 @@ $( document ).ready(function() {
                 </svg>
               </span>
                         </h2>
-                        <div id="collapseCC" class="accordion-collapse collapse show" data-bs-parent="#accordionPayment"
+                        <div id="collapseCC" class="accordion-collapse collapse" data-bs-parent="#accordionPayment"
                              style="">
                             <div class="accordion-body">
                                 <div class="mb-3">
@@ -193,6 +216,5 @@ $( document ).ready(function() {
     </form>
 </div>
 </body>
-
 </html>
 

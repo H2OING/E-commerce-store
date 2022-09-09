@@ -62,9 +62,17 @@ public class Product {
     	carts.add(cart);
     }
 
+    public void clearCarts(Long idP){
+        for (Cart cart:
+             carts) {
+            if(cart.getIdCart() == idP){
+                carts.remove(cart);
+            }
+        }
+    }
+
     @ManyToOne
     @JoinColumn(name = "idCat")
-    @Cascade(CascadeType.ALL)
     private Category category;
     
     public Product (String name,String description,int quantity,BigDecimal price,byte[] picture,Category category) {

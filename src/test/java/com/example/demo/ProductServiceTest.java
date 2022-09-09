@@ -1,12 +1,9 @@
 package com.example.demo;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -37,6 +34,8 @@ import com.example.demo.Service.Product_Service;
 
 import aj.org.objectweb.asm.Type;
 
+import javax.persistence.EntityNotFoundException;
+
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
 
@@ -51,9 +50,6 @@ public class ProductServiceTest {
 	
 		Category category = new Category("Electronics", "Phone tech");
 		Product product = new Product("Camera", "New", 4, new BigDecimal(270), null, category);
-		
-		//when(productRepository.findById(product.getIdP())).thenReturn(Optional.of(product));
-		//MatcherAssert.assertThat( product.getCategory().getName()).isEqualTo("Electronics", true);
 		
 		assertThat(product.getName()).isEqualTo("Camera");
 		assertThat(product.getCategory().getName()).isEqualTo("Electronics");
@@ -76,6 +72,12 @@ public class ProductServiceTest {
 		assertEquals(1, productService.getAllProducts().size());
 	}
 	@Test
+	@DisplayName("Test should pass when an entity is not found in database")
+	void getProductByIdServiceNotFound(){
+		doReturn(Optional.empty()).when(productRepository).findById(1l);
+		assertThrows(EntityNotFoundException.class, () -> productService.getProductById(1l));
+	}
+	@Test
 	@DisplayName("Test should pass when a product is deleted")
 	void deleteProduct() {
 		Category category = new Category("Electronics", "Phone tech");
@@ -85,6 +87,7 @@ public class ProductServiceTest {
 		productService.deleteProduct(product.getIdP());
 		verify(productRepository,times(1)).deleteById(product.getIdP());
 	}
+
 	
 	@Test
 	@Rollback(value = false)
@@ -100,5 +103,14 @@ public class ProductServiceTest {
 		//System.out.println(productR);
 		assertThat(updatedProduct.getName()).isEqualTo("Fridge");
 		//assertEquals("Fridge",updatedProduct.getName());
+	}
+
+	@Test
+	@DisplayName("Test should pass when an entity is not found in database")
+	void deleteProductNotFound(){
+		Category category = new Category("Electronics", "Phone tech");
+		Product product = new Product("Camera", "New", 4, new BigDecimal(270), null, category);
+		assertThrows(EntityNotFoundException.class, () -> productService.deleteProduct(product.getIdP()));
+
 	}
 }

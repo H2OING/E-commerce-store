@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -47,6 +48,12 @@ public class Product_Controller {
         return "home";
     }
 
+    @GetMapping("/admin/product")
+    public String selectAllProductsAdmin(Model model){
+        model.addAttribute("object", productService.getAllProducts());
+        return "product-show-all";
+    }
+
     @GetMapping(value = "/product/{id}")
     public String getProduct(@PathVariable(name = "id") Long id, Model model){
         model.addAttribute("product", productService.getProductById(id));
@@ -66,10 +73,24 @@ public class Product_Controller {
         return new ResponseEntity<byte[]>(imageContent, headers, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/admin/createProduct")
-    public String createProduct(@Valid Product product){
-        productService.createProduct(product);
-        return "createProduct";
+    @GetMapping ("/admin/product/add")
+    public String getAddCategory (Product product){
+        return "product-create";
+    }
+
+
+    @PostMapping ("/admin/product/add")
+    public String postAddCategory (@Valid Product product, BindingResult result)
+    {
+        if (!result.hasErrors()) {
+            if(productService.createProduct(product))
+            return "redirect:/admin/product";
+            else 
+                return "redirect:/error";
+        }
+        else {
+            return"product-create";
+        }
     }
 
     @PutMapping(value = "/admin/updateProduct/{id}")

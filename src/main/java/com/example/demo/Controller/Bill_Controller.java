@@ -1,19 +1,18 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Model.*;
-import com.example.demo.Service.Bill_Service;
+import com.example.demo.Service.*;
 
 import javax.validation.Valid;
 
-import com.example.demo.Service.Cart_Service;
-import com.example.demo.Service.Customer_Order_Service;
-import com.example.demo.Service.Web_User_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.Date;
 
 @Controller
@@ -25,20 +24,24 @@ public class Bill_Controller {
     @Autowired
     Customer_Order_Service customerOrderService;
 
+    @Autowired
+    Product_Service productService;
+
+    CreditCardValidation creditCardValidationGlobal = new CreditCardValidation();
+
     @GetMapping("/admin/bills")
     public String getAllBills(Model model){
         model.addAttribute("bills", billService.getAllBills());
         return "bills";
     }
-    @GetMapping("/user/checkout")
+    @GetMapping(value = "/user/checkout")
     public String getBillingForm(Model model){
         Web_User user = webUserService.getLoggedInWebUser();
         //model.addAttribute("order", user.getCart().getOrder());
         model.addAttribute("order", new Customer_Order(Order_Status.HOLD, new Date(), null, webUserService.getLoggedInWebUser().getCart()));
-        model.addAttribute("bill", new Bill());
-        model.addAttribute("paymentMethodCreditCard", Payment_Method.CREDIT_CARD);
-        model.addAttribute("paymentMethodPaypal", Payment_Method.PAYPAL);
         model.addAttribute("cart", webUserService.getLoggedInWebUser().getCart());
+        model.addAttribute("creditCard", creditCardValidationGlobal);
+        model.addAttribute("paypal", new PaypalValidation());
         return "checkout";
     }
 
@@ -47,16 +50,27 @@ public class Bill_Controller {
         model.addAttribute("bill", billService.getBillById(id));
         return "bill";
     }
-    @PostMapping("/user/createBill")
-    public String createCustomerOrderBill(@ModelAttribute("bill") Bill bill){
-        Web_User user = webUserService.getLoggedInWebUser();
-        Customer_Order order = new Customer_Order(Order_Status.NEW, new Date(), null, user.getCart());
-        bill.setOrder(order);
-        bill.setPaymentDate(new Date());
-        order.setBill(bill);
-        billService.createBill(bill);
-        customerOrderService.createCustomerOrder(order);
-        return "redirect:/";
+
+    @PostMapping("/user/checkout")
+    public String createCustomerOrderBill(Model model, @ModelAttribute("cart") Cart cart, @ModelAttribute("bill") Bill bill,
+                                          @ModelAttribute("creditCard") @Valid CreditCardValidation creditCardValidation, BindingResult resultCreditCard,
+                                          @ModelAttribute("paypal") @Valid PaypalValidation paypalValidation, BindingResult resultPaypal){
+        if(resultCreditCard.hasErrors() || resultPaypal.hasErrors()){
+            model.addAttribute("order", new Customer_Order(Order_Status.HOLD, new Date(), null, webUserService.getLoggedInWebUser().getCart()));
+            model.addAttribute("cart", webUserService.getLoggedInWebUser().getCart());
+            return "checkout";
+        } else {
+            Customer_Order order = new Customer_Order(Order_Status.NEW, new Date(), null, cart);
+
+            bill.setOrder(order);
+            bill.setPaymentDate(new Date());
+
+            order.setBill(bill);
+            billService.createBill(bill);
+
+            customerOrderService.createCustomerOrder(order);
+            return "redirect:/";
+        }
     }
 
     @PostMapping(value = "/admin/createBill")

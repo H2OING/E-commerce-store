@@ -1,7 +1,9 @@
 package com.example.demo;
 
 
+import java.io.File;
 import java.math.BigDecimal;
+import java.nio.file.Files;
 import java.util.*;
 
 
@@ -46,10 +48,28 @@ public class ECommerceStore1Application {
 				//Web_User user = new Web_User("Maris","Ansbergs", "maris@gmail.com", "2282828" ,"maja", "Mqwertyuiiop1!", Role.ROLE_ADMIN);
 				//user.setPasswordHashed(user.getPassword());
 				//WRepo.save(user);
-				//Category category = new Category("Electronics", "Phone tech");
-				//catRepo.save(category);
-				//Product prod = new Product("Samsung S22", "New, 5G", 1, new BigDecimal(450), null,category);
-				//ProdRepo.save(prod);
+				/* 
+				Category category = new Category("Electronics", "Phone tech");
+				catRepo.save(category);
+				Category category1 = new Category("Clothing", "Shoes, pants, shirts etc.");
+				catRepo.save(category1);
+				Category category2 = new Category("Sport", "Products for sport activities");
+				catRepo.save(category2);
+				Category category3 = new Category("Kids", "Toys, food etc.");
+				catRepo.save(category3);
+				*/
+
+				/* 
+				File phonePhoto = new File("C:/Users/marku/Desktop/camera.png");
+				byte[] phone = Files.readAllBytes(phonePhoto.toPath());
+
+				Category category4 = new Category("Phone", "phone");
+				catRepo.save(category4);
+				
+				Product prod = new Product("Samsung S22", "New, 5G", 1, new BigDecimal(450), phone, category4);
+				ProdRepo.save(prod);
+				*/
+
 				//Cart cart = new Cart(new BigDecimal(450), false,user , new ArrayList<>(Arrays.asList(prod)));
 				//CRepo.save(cart);
 				//Customer_Order cOrder = new Customer_Order(Order_Status.NEW, new Date(), new Date(), cart);

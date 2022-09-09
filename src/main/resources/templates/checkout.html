@@ -32,6 +32,7 @@ $( document ).ready(function() {
     $("#email").prop('disabled', false); //enable
   });
 });
+
     </script>
     <script>
         function checkRadioInputs(){
@@ -41,6 +42,8 @@ $( document ).ready(function() {
                 $("#date").prop('disabled', false); //enable
                 $("#cvvCode").prop('disabled', false); //enable
                 $("#email").prop('disabled', true); //disable
+                $("#collapseCC").collapse("show");
+                $("#collapsePP").collapse("hide");
             }
             if($('#paypal').is(':checked')){
                 $("#number").prop('disabled', true); //disable
@@ -48,17 +51,11 @@ $( document ).ready(function() {
                 $("#date").prop('disabled', true); //disable
                 $("#cvvCode").prop('disabled', true); //disable
                 $("#email").prop('disabled', false); //enable
+                $("#collapseCC").collapse("hide");
+                $("#collapsePP").collapse("show");
             }
         }
-    </script>
-    <script>
-        function collapseAccordion(){
-            if($('#creditCard').is(':checked')){
-            }
-            if($('#paypal').is(':checked')){
-                $('#accordionPayment').collapse('hide');
-            }
-        }
+
     </script>
     <link rel="stylesheet" th:href="@{/css/checkout.css}"/>
 </head>
@@ -71,9 +68,9 @@ $( document ).ready(function() {
             <div class="col-lg-9">
                 <div class="accordion" id="accordionPayment">
                     <!-- Credit card -->
-                    <div class="accordion-item mb-3">
+                    <div class="accordion-item mb-3" id="creditCardAccordion">
                         <h2 class="h5 px-4 py-3 accordion-header d-flex justify-content-between align-items-center">
-                            <div class="form-check w-100" aria-expanded="false" id="creditCardAccordion">
+                            <div class="form-check w-100 collapsed" aria-expanded="false">
                                 <input data-bs-toggle="collapse"
                                        data-bs-target="#collapseCC" class="form-check-input credit-card" type="radio"
                                        id="creditCard" th:name="flag"
@@ -91,7 +88,7 @@ $( document ).ready(function() {
                 </svg>
               </span>
                         </h2>
-                        <div id="collapseCC" class="accordion-collapse collapse show" data-bs-parent="#accordionPayment"
+                        <div id="collapseCC" class="accordion-collapse collapse" data-bs-parent="#accordionPayment"
                              style="">
                             <div class="accordion-body">
                                 <div class="mb-3">
@@ -219,6 +216,5 @@ $( document ).ready(function() {
     </form>
 </div>
 </body>
-
 </html>
 

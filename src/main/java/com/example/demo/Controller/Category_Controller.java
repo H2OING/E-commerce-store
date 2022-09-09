@@ -22,14 +22,13 @@ public class Category_Controller {
     Category_Service categoryService;
     @Autowired
     Product_Service productService;
-
     @Autowired
     Web_User_Service webUserService;
 
     @GetMapping("/categories")
     public String getAllCategories(Model model){
         model.addAttribute("categories", categoryService.getAllCategories());
-        if(webUserService.isLoggedIn()){
+        if(webUserService.isLoggedIn() && webUserService.isCustomer()){
             Collection<Product> products = webUserService.getLoggedInWebUser().getCart().getProducts();
             model.addAttribute("cartProducts", products);
         }

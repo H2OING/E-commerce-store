@@ -43,7 +43,7 @@ public class Web_User_Controller {
     public String getLoggedInUserDetails(Model model){
         model.addAttribute("webUser", webUserService.getLoggedInWebUser());
         model.addAttribute("categories", categoryService.getAllCategories());
-        if(webUserService.isLoggedIn()){
+        if(webUserService.isLoggedIn() && webUserService.isCustomer()){
             Collection<Product> products = webUserService.getLoggedInWebUser().getCart().getProducts();
             model.addAttribute("cartProducts", products);
         }
@@ -59,13 +59,6 @@ public class Web_User_Controller {
     }
 
     @PostMapping(value = "/register")
-
-    public String createWebUser(@ModelAttribute("webUser") Web_User webUser){
-
-        webUserService.createWebUser(webUser);
-        return "redirect:/register?success";
-    }
-
     public String createWebUser(@ModelAttribute("webUser") @Valid Web_User webUser, BindingResult result){
         try {
             if (result.hasErrors()) {
@@ -77,9 +70,7 @@ public class Web_User_Controller {
         } catch (Exception e){
             return "redirect:/register?error";
         }
-
     }
-
 
     @PutMapping(value = "PlaceholderMapping10")
     public String updateWebUser(@PathVariable(name = "id") Long id, @Valid Web_User webUser){
@@ -87,10 +78,10 @@ public class Web_User_Controller {
         return "updateWebUser";
     }
 
-    @GetMapping(value = "/admin/webuser/update/{id}")
+    @GetMapping("/admin/webuser/update/{id}")
     public String updateWebUser(@PathVariable(name = "id") Long id, Model model){
         try{
-            model.addAttribute("webuser", webUserService.getWebUserById(id));
+            model.addAttribute("webUser", webUserService.getWebUserById(id));
             return "webUser-update";
         }
         catch(Exception e){
@@ -98,25 +89,27 @@ public class Web_User_Controller {
         }
     }
     @PostMapping("/admin/webuser/update/{id}")
-    public String postUpdateCourse(@PathVariable(name = "id") Long id,@Valid Web_User webUser, BindingResult result, Model model){
+    public String postUpdateWebUser(@PathVariable(name = "id") Long id,@Valid Web_User webUser, BindingResult result, Model model){
         
         if(!result.hasErrors()){
             if(webUserService.updateWebUser(id, webUser))
-                return "redirect:/admin/webuser/" + id;
+                //return "redirect:/admin/webuser/" + id;
+                return "redirect:/admin/webuser";
             else
                 return "redirect:/error";
         }
         else{
-            model.addAttribute("webuser", webUserService.getAllWebUsers());
+            model.addAttribute("webUser", webUserService.getWebUserById(id));
             return"webUser-update";
         }
-
     }
 
-
-    @RequestMapping(value = "/admin/webuser/delete/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})
-    public String deleteWebUser(@PathVariable(name = "id") Long id){
-        webUserService.deleteWebUser(id);
-        return "redirect:/admin/webuser";
+    @RequestMapping(value = "/admin/webuser/delete/{id}", method = {RequestMethod.DELETE, RequestMethod.GET})
+    public String deleteWebUser(@PathVariable(name = "id") Long id, Model model){
+        if(webUserService.deleteWebUser(id)){
+            //model.addAttribute("webUser", webUserService.getAllWebUsers());
+            return "redirect:/admin/webuser";
+        }
+        return "redirect:/error";
     }
 }

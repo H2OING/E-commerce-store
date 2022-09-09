@@ -30,6 +30,10 @@ public class Product_Controller {
 
     @Autowired
     Cart_Service cartService;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4d50d1d3219ea8a3c5da6978f4f008d884823082
     @Autowired
     Web_User_Service webUserService;
 

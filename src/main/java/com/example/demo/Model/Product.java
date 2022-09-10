@@ -10,11 +10,17 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Type;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.nio.file.Files;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.ArrayList;
@@ -48,6 +54,7 @@ public class Product {
     @Max(value = 5000)
     private BigDecimal price;
     @Column(name = "picture", columnDefinition = "blob")
+    @Lob
     private byte[] picture;
     
     @ManyToMany
@@ -70,6 +77,16 @@ public class Product {
             }
         }
     }
+
+    public void setPictureByte(byte[] picture){
+        this.picture = picture;
+       }
+
+
+    public void setPicture(MultipartFile picture) throws IOException{
+        //InputStreamReader inputt = new InputStreamReader(picture.getInputStream());
+        this.picture = picture.getBytes();
+       }
 
     @ManyToOne
     @JoinColumn(name = "idCat")

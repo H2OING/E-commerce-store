@@ -80,6 +80,11 @@ public class Bill_Controller {
 
             bill.setOrder(order);
             bill.setPaymentDate(new Date());
+            if(creditCardValidation.getFlag()){
+                bill.setPaymentMethod(Payment_Method.CREDIT_CARD);
+            } else{
+                bill.setPaymentMethod(Payment_Method.PAYPAL);
+            }
 
             order.setBill(bill);
             billService.createBill(bill);
@@ -130,6 +135,7 @@ public class Bill_Controller {
         for (Product product:
              cartProducts) {
             cart.removeProduct(product);
+            cart.setTotal(cart.getTotal().subtract(product.getPrice()));
             product.removeCart(cart);
             productService.updateProduct(product.getIdP(), product);
         }

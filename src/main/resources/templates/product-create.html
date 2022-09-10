@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-6 mx-auto">
                     <h1>New product</h1>
-                        <form action="#" th:action="@{/admin/product/add}" th:object="${product}" method="post">
+                        <form action="#" th:action="@{/admin/product/add}" th:object="${product}" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
                                         <label for="name">Name</label>
                                         <input type="text" id="name" th:field="*{name}" class="form-control">
@@ -70,15 +70,12 @@
                                     
                                         <div class="row">
                                             <div class="col-md-8 mx-auto">
-                                                <label for="price">Image</label>
-                                                <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
-                                                <form method="post" th:action="@{/upload}" enctype="multipart/form-data">
-                                                    <div class="form-group">
-                                                        <input type="file" name="image" accept="image/*" class="form-control-file">
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary">Save Product</button>
-                                                </form>
-                                                <span th:if="${msg != null}" th:text="${msg}"></span>
+                                                <label for="picture">Image</label>
+                                                <div class="form-group">
+                                                    <input type="file" name="picture" id="picture" th:field="*{picture}" class="form-control-file" accept="image/png">
+                                                </div>
+                                                <button type="submit" multiple="true" class="btn btn-primary">Save Product</button>
+
                                             </div>
                                         </div>
                                         

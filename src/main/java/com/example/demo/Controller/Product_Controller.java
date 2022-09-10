@@ -6,6 +6,8 @@ import com.example.demo.Service.Cart_Service;
 import com.example.demo.Service.Category_Service;
 import com.example.demo.Service.Product_Service;
 import com.example.demo.Service.Web_User_Service;
+
+import org.apache.tomcat.jni.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,7 +89,7 @@ public class Product_Controller {
 
 
     @PostMapping ("/admin/product/add")
-    public String postAddProduct (@Valid Product product, BindingResult result)
+    public String postAddProduct (@Valid Product product, BindingResult result, @ModelAttribute("product") Product product2, Model model)
     {
         if (!result.hasErrors()) {
             if(productService.createProduct(product))
@@ -93,14 +98,42 @@ public class Product_Controller {
                 return "redirect:/error";
         }
         else {
+            Collection<Category> listCategory = categoryService.getAllCategories(); 
+            model.addAttribute("listCategory", listCategory);
             return"product-create";
         }
     }
 
-    @PutMapping(value = "/admin/updateProduct/{id}")
-    public String updateProduct(@PathVariable(name = "id") Long id,@Valid Product product){
-        productService.updateProduct(id, product);
-        return "updateProduct";
+    @GetMapping("/admin/product/update/{id}")
+    public String updateProduct(@PathVariable(name = "id") Long id, Model model){
+        try{
+            Collection<Category> listCategory = categoryService.getAllCategories(); 
+            
+            model.addAttribute("product", productService.getProductById(id));
+            model.addAttribute("listCategory", listCategory);
+            model.addAttribute("pictureFile", null);
+
+            return "product-update";
+        }
+        catch(Exception e){
+            return "error";
+        }
+    }
+
+    @PostMapping(value = "/admin/product/update/{id}")
+    public String updateProduct(@PathVariable(name = "id") Long id,@Valid Product product, BindingResult result, Model model){
+        
+        if(!result.hasErrors()){
+            if(productService.updateProduct(id, product)){
+                return "redirect:/admin/product";}
+            else{
+                return "redirect:/error";}
+        }
+        else{
+            model.addAttribute("product", productService.getProductById(id));
+            return"product-update";
+        }
+            
     }
 
     @RequestMapping(value = "/admin/product/delete/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})

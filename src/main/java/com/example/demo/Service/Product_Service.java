@@ -39,7 +39,7 @@ public class Product_Service {
         return true;
     }
 
-    public Product updateProduct(Long id, Product product){
+    public boolean updateProduct(Long id, Product product){
         Optional<Product> optionalProduct = productRepository.findById(id);
         if(optionalProduct.isPresent()){
             Product existingProduct = optionalProduct.get();
@@ -47,10 +47,11 @@ public class Product_Service {
             existingProduct.setDescription(product.getDescription());
             existingProduct.setQuantity(product.getQuantity());
             existingProduct.setPrice(product.getPrice());
-            existingProduct.setPicture(product.getPicture());
+            existingProduct.setPictureByte(product.getPicture());
             existingProduct.setCarts(product.getCarts());
             existingProduct.setCategory(product.getCategory());
-            return productRepository.save(existingProduct);
+            productRepository.save(existingProduct);
+            return true;
         } else{
             throw new EntityNotFoundException();
         }

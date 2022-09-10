@@ -14,10 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class Bill_Controller {
@@ -27,9 +24,10 @@ public class Bill_Controller {
     Web_User_Service webUserService;
     @Autowired
     Customer_Order_Service customerOrderService;
-
     @Autowired
     Product_Service productService;
+    @Autowired
+    Cart_Service cartService;
 
     CreditCardValidation creditCardValidationGlobal = new CreditCardValidation();
 
@@ -41,7 +39,6 @@ public class Bill_Controller {
     @GetMapping(value = "/user/checkout")
     public String getBillingForm(Model model){
         Web_User user = webUserService.getLoggedInWebUser();
-        //model.addAttribute("order", user.getCart().getOrder());
         model.addAttribute("order", new Customer_Order(Order_Status.HOLD, new Date(), null, webUserService.getLoggedInWebUser().getCart()));
         model.addAttribute("cart", webUserService.getLoggedInWebUser().getCart());
         model.addAttribute("creditCard", creditCardValidationGlobal);
@@ -60,13 +57,14 @@ public class Bill_Controller {
                                           @ModelAttribute("creditCard") @Valid CreditCardValidation creditCardValidation, BindingResult resultCreditCard,
                                           @ModelAttribute("paypal") @Valid PaypalValidation paypalValidation, BindingResult resultPaypal,
                                           RedirectAttributes redirectAttributes){
+        Web_User loggedInUser = webUserService.getLoggedInWebUser();
         if(resultCreditCard.hasErrors() || resultPaypal.hasErrors()){
-            model.addAttribute("order", new Customer_Order(Order_Status.HOLD, new Date(), null, webUserService.getLoggedInWebUser().getCart()));
-            model.addAttribute("cart", webUserService.getLoggedInWebUser().getCart());
+            model.addAttribute("order", new Customer_Order(Order_Status.HOLD, new Date(), null, loggedInUser.getCart()));
+            model.addAttribute("cart", loggedInUser.getCart());
             return "checkout";
         } else {
 
-            Collection<Product> orderProducts = webUserService.getLoggedInWebUser().getCart().getProducts();
+            Collection<Product> orderProducts =loggedInUser.getCart().getProducts();
             HashMap<Long, Integer> productOrderQuantities = new HashMap<>();
             countProductAmount(productOrderQuantities, orderProducts);
             Pair<Boolean, String> flagAndErrorMessage = notEnoughInStock(productOrderQuantities);
@@ -87,6 +85,7 @@ public class Bill_Controller {
             billService.createBill(bill);
 
             customerOrderService.createCustomerOrder(order);
+            clearCart(loggedInUser);
             return "redirect:/";
         }
     }
@@ -123,6 +122,19 @@ public class Bill_Controller {
             Product product = productService.getProductById(productId);
             product.setQuantity(product.getQuantity() - amount);
         }
+    }
+
+    private void clearCart(Web_User loggedInUser){
+        Cart cart = loggedInUser.getCart();
+        List<Product> cartProducts = new ArrayList<>(cart.getProducts());
+        for (Product product:
+             cartProducts) {
+            cart.removeProduct(product);
+            product.removeCart(cart);
+            productService.updateProduct(product.getIdP(), product);
+        }
+        cartService.updateCart(cart.getIdCart(), cart);
+
     }
 
     @PostMapping(value = "/admin/createBill")

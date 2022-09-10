@@ -40,7 +40,7 @@ public class Product {
     @Size(min = 2, max = 60, message = "Invalid input length for Product description")
     private String description;
     @Column(name = "quantity")
-    @Min(value = 1)
+    @Min(value = 0)
     @Max(value = 50)
     private int quantity;
     @Column(name = "price")

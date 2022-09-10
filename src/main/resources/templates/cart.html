@@ -16,6 +16,9 @@
 	<link rel="stylesheet" th:href="@{/css/product.css}"/>
 </head>
 
+<div th:if="${param.error}">
+	<div class = "alert alert-danger" th:text="${errorMessage}"></div>
+</div>
 
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container pad w">

@@ -5,15 +5,19 @@ import com.example.demo.Service.*;
 
 import javax.validation.Valid;
 
+import org.javatuples.Pair;
+import org.javatuples.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class Bill_Controller {
@@ -54,12 +58,26 @@ public class Bill_Controller {
     @PostMapping("/user/checkout")
     public String createCustomerOrderBill(Model model, @ModelAttribute("cart") Cart cart, @ModelAttribute("bill") Bill bill,
                                           @ModelAttribute("creditCard") @Valid CreditCardValidation creditCardValidation, BindingResult resultCreditCard,
-                                          @ModelAttribute("paypal") @Valid PaypalValidation paypalValidation, BindingResult resultPaypal){
+                                          @ModelAttribute("paypal") @Valid PaypalValidation paypalValidation, BindingResult resultPaypal,
+                                          RedirectAttributes redirectAttributes){
         if(resultCreditCard.hasErrors() || resultPaypal.hasErrors()){
             model.addAttribute("order", new Customer_Order(Order_Status.HOLD, new Date(), null, webUserService.getLoggedInWebUser().getCart()));
             model.addAttribute("cart", webUserService.getLoggedInWebUser().getCart());
             return "checkout";
         } else {
+
+            Collection<Product> orderProducts = webUserService.getLoggedInWebUser().getCart().getProducts();
+            HashMap<Long, Integer> productOrderQuantities = new HashMap<>();
+            countProductAmount(productOrderQuantities, orderProducts);
+            Pair<Boolean, String> flagAndErrorMessage = notEnoughInStock(productOrderQuantities);
+
+            if(flagAndErrorMessage.getValue0()){
+                redirectAttributes.addFlashAttribute("errorMessage", flagAndErrorMessage.getValue1());
+                return "redirect:/user/cart?error";
+            } else{
+                subtractInStock(productOrderQuantities);
+            }
+
             Customer_Order order = new Customer_Order(Order_Status.NEW, new Date(), null, cart);
 
             bill.setOrder(order);
@@ -70,6 +88,40 @@ public class Bill_Controller {
 
             customerOrderService.createCustomerOrder(order);
             return "redirect:/";
+        }
+    }
+
+    private void countProductAmount(HashMap<Long, Integer> productOrderQuantities, Collection<Product> orderProducts){
+        for (Product product:
+                orderProducts) {
+            if(!productOrderQuantities.containsKey(product.getIdP())){
+                productOrderQuantities.put(product.getIdP(), 1);
+                continue;
+            }
+            productOrderQuantities.put(product.getIdP(), productOrderQuantities.get(product.getIdP()) + 1);
+        }
+    }
+
+    private Pair<Boolean, String> notEnoughInStock(HashMap<Long, Integer> productOrderQuantities){
+        for (Map.Entry<Long, Integer> entry:
+             productOrderQuantities.entrySet()) {
+            Long productId = entry.getKey();
+            Integer amount = entry.getValue();
+            Product product = productService.getProductById(productId);
+            if(product.getQuantity() < amount){
+                return Pair.with(true, String.format("You are trying to order %d amount of %s, when there is only %d in stock", amount, product.getName(), product.getQuantity()));
+            }
+        }
+        return Pair.with(false, "");
+    }
+
+    private void subtractInStock(HashMap<Long, Integer> productOrderQuantities){
+        for (Map.Entry<Long, Integer> entry:
+             productOrderQuantities.entrySet()) {
+            Long productId = entry.getKey();
+            Integer amount = entry.getValue();
+            Product product = productService.getProductById(productId);
+            product.setQuantity(product.getQuantity() - amount);
         }
     }
 

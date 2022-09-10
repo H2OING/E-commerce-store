@@ -112,15 +112,11 @@
                                     <form action="/user/addToCart" method="post">
                                         <input type="hidden" name="id" th:value="${product.idP}"/>
                                         <input type="hidden" name="path" th:value="@{'/product/' + ${product.idP}}"/>
-                                        <div class="col-lg-12">
-                                            <h6>Quantity :</h6>
-                                            <input name="quantity" min="1" th:max="${product.quantity}" placeholder="quantity" type="number" class="form-control text-center w-100" value="1">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary mt-2"> Add to cart</button>
+                                        <button th:if="${product.quantity > 0}" type="submit" class="btn btn-primary w-100"> Add to cart</button>
                                     </form>
                                 </div>
                                 <div class="col-lg-6">
-                                    <a href="#" class="btn btn-success w-100">Shop Now</a>
+                                    <a href="/user/cart" class="btn btn-success w-100">Shop Now</a>
                                 </div>
                             </div>
                         </div>

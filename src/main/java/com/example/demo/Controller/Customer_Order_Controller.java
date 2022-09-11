@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Model.Customer_Order;
 import com.example.demo.Model.Order_Status;
+import com.example.demo.Model.Web_User;
 import com.example.demo.Service.Customer_Order_Service;
 
 import javax.validation.Valid;
@@ -36,7 +37,8 @@ public class Customer_Order_Controller {
 
     @PostMapping(value = "/user/createOrder")
     public String createCustomerOrder(){
-        Customer_Order order = new Customer_Order(Order_Status.HOLD, new Date(), null, webUserService.getLoggedInWebUser().getCart());
+        Web_User loggedInUser = webUserService.getLoggedInWebUser();
+        Customer_Order order = new Customer_Order(Order_Status.HOLD, new Date(), null, loggedInUser.getCart().toStringProducts(), loggedInUser.getCart());
         customerOrderService.createCustomerOrder(order);
         return "redirect:/user/checkout";
     }

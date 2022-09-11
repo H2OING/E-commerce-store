@@ -37,6 +37,9 @@ public class Customer_Order {
     @Column(name = "shipped_date")
     @DateTimeFormat(iso = ISO.DATE_TIME)
     private Date shippedDate;
+
+    @Column(name = "ordered_products")
+    private String orderedProducts;
     /*
     @OneToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "idCart")
@@ -51,10 +54,11 @@ public class Customer_Order {
     @OneToOne(mappedBy = "order")
     private Bill bill;
     
-    public Customer_Order(Order_Status status,Date orderedDate,Date shippedDate, Cart cart) {
+    public Customer_Order(Order_Status status,Date orderedDate,Date shippedDate, String orderedProducts, Cart cart) {
     	this.status = status;
     	this.orderedDate = orderedDate;
     	this.shippedDate = shippedDate;
+        this.orderedProducts = orderedProducts;
     	this.cart = cart;
     }
 }

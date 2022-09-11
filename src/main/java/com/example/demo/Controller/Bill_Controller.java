@@ -39,7 +39,7 @@ public class Bill_Controller {
     @GetMapping(value = "/user/checkout")
     public String getBillingForm(Model model){
         Web_User user = webUserService.getLoggedInWebUser();
-        model.addAttribute("order", new Customer_Order(Order_Status.HOLD, new Date(), null, webUserService.getLoggedInWebUser().getCart()));
+        model.addAttribute("order", new Customer_Order(Order_Status.HOLD, new Date(), null, user.getCart().toStringProducts(), user.getCart()));
         model.addAttribute("cart", webUserService.getLoggedInWebUser().getCart());
         model.addAttribute("creditCard", creditCardValidationGlobal);
         model.addAttribute("paypal", new PaypalValidation());
@@ -59,7 +59,7 @@ public class Bill_Controller {
                                           RedirectAttributes redirectAttributes){
         Web_User loggedInUser = webUserService.getLoggedInWebUser();
         if(resultCreditCard.hasErrors() || resultPaypal.hasErrors()){
-            model.addAttribute("order", new Customer_Order(Order_Status.HOLD, new Date(), null, loggedInUser.getCart()));
+            model.addAttribute("order", new Customer_Order(Order_Status.HOLD, new Date(), null, loggedInUser.getCart().toStringProducts(), loggedInUser.getCart()));
             model.addAttribute("cart", loggedInUser.getCart());
             return "checkout";
         } else {
@@ -76,7 +76,7 @@ public class Bill_Controller {
                 subtractInStock(productOrderQuantities);
             }
 
-            Customer_Order order = new Customer_Order(Order_Status.NEW, new Date(), null, cart);
+            Customer_Order order = new Customer_Order(Order_Status.NEW, new Date(), null, loggedInUser.getCart().toStringProducts(), cart);
 
             bill.setOrder(order);
             bill.setPaymentDate(new Date());

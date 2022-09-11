@@ -56,4 +56,14 @@ public class Cart {
     public void removeProduct(Product product) {
         products.remove(product);
     }
+
+    public String toStringProducts(){
+        StringBuilder builder = new StringBuilder();
+        for (Product product:
+             this.products) {
+            builder.append(String.format("%s: %.2f€\n", product.getName(), product.getPrice()));
+        }
+        builder.append(String.format("Total: %.2f€", this.total));
+        return builder.toString();
+    }
 }

@@ -5,7 +5,7 @@ body {
 
 .hedding {
     font-size: 20px;
-    color: #ab8181;
+    color: #000000;
 }
 
 .main-section {
@@ -31,11 +31,11 @@ body {
 
 .right-side-pro-detail p {
     font-size: 25px;
-    color: #a1a1a1;
+    color: #000000;
 }
 
 .right-side-pro-detail .price-pro {
-    color: #E45641;
+    color: #000000;
 }
 
 .right-side-pro-detail .tag-section {

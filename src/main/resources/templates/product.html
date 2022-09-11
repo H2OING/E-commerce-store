@@ -9,11 +9,11 @@
           crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
     <link rel="stylesheet" th:href="@{/productDetails.css}"/>
-    <link rel="stylesheet" th:href="@{/css/cart.css}"/>
+    <link rel="stylesheet" th:href="@{/css/product.css}"/>
 </head>
-<body>
+<body style="background:url(https://www.onlygfx.com/wp-content/uploads/2021/04/white-triangle-pattern-seamless-background-1.jpg);">
 
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg bg-light pad w">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -83,16 +83,15 @@
     </div>
 </nav>
 <div class="container">
-    <div class="col-lg-8 border p-3 main-section bg-white">
+    <div class="col-lg-8 border p-3 main-section bg-white pad w">
         <div class="row m-0">
             <div class="col-lg-4 left-side-product-box pb-3" th:style="'background:url(' + @{'/image/' + ${product.idP}} + ') no-repeat center; background-size: contain;'">
-
             </div>
             <div class="col-lg-8">
                 <div class="right-side-pro-detail border p-3 m-0">
                     <div class="row">
                         <div class="col-lg-12">
-                            <p class="m-0 p-0" th:text="${product.name}"></p>
+                            <p class="m-0 p-0" style="color:#000000;" th:text="${product.name}"></p>
                         </div>
                         <div class="col-lg-12">
                             <p class="m-0 p-0 price-pro" th:text="${product.price + '€'}"></p>
@@ -113,15 +112,11 @@
                                     <form action="/user/addToCart" method="post">
                                         <input type="hidden" name="id" th:value="${product.idP}"/>
                                         <input type="hidden" name="path" th:value="@{'/product/' + ${product.idP}}"/>
-                                        <div class="col-lg-12">
-                                            <h6>Quantity :</h6>
-                                            <input name="quantity" min="1" th:max="${product.quantity}" placeholder="quantity" type="number" class="form-control text-center w-100" value="1">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary mt-2"> Add to cart</button>
+                                        <button th:if="${product.quantity > 0}" type="submit" class="btn btn-primary w-100"> Add to cart</button>
                                     </form>
                                 </div>
                                 <div class="col-lg-6">
-                                    <a href="#" class="btn btn-success w-100">Shop Now</a>
+                                    <a href="/user/cart" class="btn btn-success w-100">Shop Now</a>
                                 </div>
                             </div>
                         </div>

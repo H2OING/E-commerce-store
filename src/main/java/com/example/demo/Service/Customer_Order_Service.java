@@ -39,6 +39,7 @@ public class Customer_Order_Service {
             existingCustomerOrder.setStatus(customerOrder.getStatus());
             existingCustomerOrder.setOrderedDate(customerOrder.getOrderedDate());
             existingCustomerOrder.setShippedDate(customerOrder.getShippedDate());
+            existingCustomerOrder.setOrderedProducts(customerOrder.getOrderedProducts());
             existingCustomerOrder.setCart(customerOrder.getCart());
             existingCustomerOrder.setBill(customerOrder.getBill());
             return customerOrderRepository.save(existingCustomerOrder);

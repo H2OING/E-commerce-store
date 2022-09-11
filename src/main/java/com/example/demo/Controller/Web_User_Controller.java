@@ -1,8 +1,10 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Model.Cart;
 import com.example.demo.Model.Product;
 import com.example.demo.Model.Role;
 import com.example.demo.Model.Web_User;
+import com.example.demo.Service.Cart_Service;
 import com.example.demo.Service.Category_Service;
 import com.example.demo.Service.Web_User_Service;
 
@@ -25,6 +27,8 @@ public class Web_User_Controller {
     Web_User_Service webUserService;
     @Autowired
     Category_Service categoryService; //For navigation bar
+    @Autowired
+    Cart_Service cartService;
 
     @GetMapping("/admin/webuser")
     public String getAllWebUsers(Model model){
@@ -106,10 +110,11 @@ public class Web_User_Controller {
 
     @RequestMapping(value = "/admin/webuser/delete/{id}", method = {RequestMethod.DELETE, RequestMethod.GET})
     public String deleteWebUser(@PathVariable(name = "id") Long id, Model model){
-        if(webUserService.deleteWebUser(id)){
+        Web_User user = webUserService.getWebUserById(id);
+        
+        cartService.deleteCart(user.getCart().getIdCart());
+        webUserService.deleteWebUser(id);
             //model.addAttribute("webUser", webUserService.getAllWebUsers());
-            return "redirect:/admin/webuser";
-        }
-        return "redirect:/error";
+        return "redirect:/admin/webuser";
     }
 }

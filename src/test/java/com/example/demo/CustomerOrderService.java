@@ -41,7 +41,7 @@ public class CustomerOrderService {
 	void SaveCustomerOrder() {
 		Product prod = new Product("Camera", "New", 4, new BigDecimal(270), null, null);
 		Customer_Order order = new Customer_Order(Order_Status.NEW, new Date(), new Date(), 
-				new Cart(new BigDecimal (70), false, 
+				null, new Cart(new BigDecimal (70), false, 
 				new Web_User("Arnold", "Desk", "Desk@gmail.com", "28989898", "Pumpkin street", "Kasdfghjkl!1", Role.ROLE_CUSTOMER),
 				new ArrayList<>(Arrays.asList(prod))));
 		custRepo.save(order);
@@ -53,7 +53,7 @@ public class CustomerOrderService {
 	void deleteCustomerOrder() {
 		Product prod = new Product("Camera", "New", 4, new BigDecimal(270), null, null);
 		Customer_Order order = new Customer_Order(Order_Status.NEW, new Date(), new Date(), 
-				new Cart(new BigDecimal (70), false, 
+				null, new Cart(new BigDecimal (70), false, 
 				new Web_User("Arnold", "Desk", "Desk@gmail.com", "28989898", "Pumpkin street", "Kasdfghjkl!1", Role.ROLE_CUSTOMER),
 				new ArrayList<>(Arrays.asList(prod))));
 		custRepo.save(order);

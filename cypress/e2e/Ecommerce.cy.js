@@ -56,7 +56,7 @@ context("Accenstore page", () =>{
     });
   });
 
-  context("Accenstore Homepage, Login, AddPRoduct", () =>{
+  context("Accenstore Homepage, AddPRoduct, Cart, Checkout", () =>{
     beforeEach(()=>{
       cy.login(emails,passwords);
       RegisterPage.visit();
@@ -64,23 +64,23 @@ context("Accenstore page", () =>{
     it("AddProduct",() =>{
       cy.wait(1500);
       ProductPage.OneProduct.click()
-      ProductPage.Quantity.should('have.attr', 'value', '1') ;
+      ProductPage.Quantity.should('contain', '1') ;
       ProductPage.SubmitButton.click();
       cy.wait(1500);
-    });
+    //});
 
-    it("CartPage, CheckoutPAge",() =>{
-      CartPage.CartIcon.click();
-      cy.wait(1500);
-      CartPage.Cart.click();
-      CartPage.ItemValidation.should('contain','Samsung S22');
+   // it("CartPage, CheckoutPAge",() =>{
+      //CartPage.CartIcon.click();
+      //cy.wait(1500);
+      CartPage.Cart.contains('Shop Now').click();
+      CartPage.ItemValidation.should('contain','Samsung S21');
       CartPage.QuantityValidation.should('have.attr', 'value', '1') ;
       cy.wait(1500);
       CartPage.Checkout.click();
     //});
       cy.wait(2000);
     //it("CheckoutPAge",() =>{
-      CheckoutPage.CardNumber.type("123456789012345");
+      CheckoutPage.CardNumber.type("1456894623841569");
       CheckoutPage.CardName.type("William Shakespear");
       CheckoutPage.CardDate.type("03/25");
       CheckoutPage.CardCv.type("123");

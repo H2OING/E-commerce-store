@@ -3,11 +3,11 @@ import BasePage from "./BasePage";
 class ProductPage extends BasePage{
 
    static get OneProduct(){
-    return cy.get("#product-2");
+    return cy.get('[href="/product/3"]');
    }
 
    static get Quantity(){
-    return cy.get('[placeholder="quantity"]');
+    return cy.get('[class="row"]');
    }
 
    static get SubmitButton(){

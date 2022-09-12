@@ -47,7 +47,6 @@ public class Web_User {
 
     @Column(name = "email", unique = true)
     @Pattern (regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,10}$", message = "Invalid input for email")
-
     @Size(min=5, max=30)
     @NotNull
     private String email;

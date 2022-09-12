@@ -45,7 +45,7 @@ public class ECommerceStore1Application {
 			
 			@Override
 			public void run(String... args) throws Exception {
-				//Web_User user = new Web_User("Maris","Ansbergs", "maris@gmail.com", "2282828" ,"maja", "Mqwertyuiiop1!", Role.ROLE_ADMIN);
+				//Web_User user = new Web_User("Maris","Ansbergs", "maris@gmail.com", "2282828" ,"maja", "12345", Role.ROLE_ADMIN);
 				//user.setPasswordHashed(user.getPassword());
 				//WRepo.save(user);
 				/* 

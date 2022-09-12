@@ -1,36 +1,93 @@
 
 import LoginPage from "./pageObjects/LoginPage";
-import RegisterPage from "./pageObjects/RegisterPage"
+import RegisterPage from "./pageObjects/RegisterPage";
+import ProductPage from "./pageObjects/ProductPage";
+import CartPage from "./pageObjects/CartPage";
+import CheckoutPage from "./pageObjects/CheckoutPage";
+Cypress.config("waitAfterEachCommand", 4000);
+//Cypress.config('experimentalSessionAndOrigin', true);
+
+Cypress.Commands.add('login', (username, password) => {
+  //cy.session([username, password], () => {
+  cy.visit('http://localhost:8080/login')
+  cy.get("[name='username']").type(emails)
+  cy.get("[name='password']").type(passwords)
+  cy.get("[type='submit']").click()
+ // cy.url().should('contain', '/login-successful')
+ // })
+})
+
+const x = Math.floor(Math.random()*1000);
+const y = (Math.random());
+let emails = 'John'+x+'@gmail.com';
+let passwords = 'Oqwertyuio1!';
 context("Accenstore page", () =>{
 
-  context("Accenstore Homepage", () =>{
+  context("Accenstore Homepage, Register,Login", () =>{
     beforeEach(()=>{
       RegisterPage.visit(); //visits homePage
-   
+      
     });
-    /*it("Register", () => {
+    it("Register", () => {
       RegisterPage.AccountDropDown.contains('Account').click()
       RegisterPage.Register.click();
       RegisterPage.Name.type('John');
       RegisterPage.Surname.type('Wick');
-      const x = Math.floor(Math.random()*10);
-      const y = (Math.random());
-      let emails = 'John'+x+'@gmail.com';
+      // const x = Math.floor(Math.random()*100);
+      // const y = (Math.random());
+      // let emails = 'John'+x+'@gmail.com';
       RegisterPage.Email.type(emails);
       RegisterPage.PhoneNr.type('27273737');
-      let passwords = 'Oqwertyuio1!';
+      //let passwords = 'Oqwertyuio1!';
       RegisterPage.Address.type('Pumpik street '+y);
       RegisterPage.Password.type(passwords);
+      cy.wait(1500);
       RegisterPage.Submit.click();
       
+      context("Login",() =>{
+        cy.wait(1500);
+        LoginPage.LoginHere.contains("Login here").click();
+        LoginPage.Username.type(emails);
+        LoginPage.Password.type(passwords);
+        LoginPage.SubmitButton.click();
+        cy.wait(1500);
+      });
       
-    });*/
+    });
+  });
 
-    it("Login",() =>{
-      LoginPage.LoginHere.click();
-      LoginPage.Username.type(emails);
-      LoginPage.Password.type(passwords);
-      LoginPage.SubmitButton.click();
+  context("Accenstore Homepage, Login, AddPRoduct", () =>{
+    beforeEach(()=>{
+      cy.login(emails,passwords);
+      RegisterPage.visit();
+    });
+    it("AddProduct",() =>{
+      cy.wait(1500);
+      ProductPage.OneProduct.click()
+      ProductPage.Quantity.should('have.attr', 'value', '1') ;
+      ProductPage.SubmitButton.click();
+      cy.wait(1500);
+    });
+
+    it("CartPage, CheckoutPAge",() =>{
+      CartPage.CartIcon.click();
+      cy.wait(1500);
+      CartPage.Cart.click();
+      CartPage.ItemValidation.should('contain','Samsung S22');
+      CartPage.QuantityValidation.should('have.attr', 'value', '1') ;
+      cy.wait(1500);
+      CartPage.Checkout.click();
+    //});
+      cy.wait(2000);
+    //it("CheckoutPAge",() =>{
+      CheckoutPage.CardNumber.type("123456789012345");
+      CheckoutPage.CardName.type("William Shakespear");
+      CheckoutPage.CardDate.type("03/25");
+      CheckoutPage.CardCv.type("123");
+      CheckoutPage.Terms.click();
+      CheckoutPage.Subscribe.click();
+      CheckoutPage.Submit.click();
+      
     });
   });
 
